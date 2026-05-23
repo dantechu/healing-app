@@ -299,7 +299,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get johnSaxxonBio =>
-      'Dr Jerry Johnson is a certified Tai Chi instructor with over 20 years of experience. He has trained thousands of students worldwide in the art of Tai Chi and meditation.';
+      'Dr Jerry Johnson is a certified Qi Gong instructor with over 20 years of experience. He has trained thousands of students worldwide in the art of Qi Gong and meditation.';
 
   @override
   String get close => 'Close';
@@ -309,7 +309,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rateAppMessage =>
-      'If you enjoy using our Tai Chi app, please take a moment to rate it. Your feedback helps us improve the app for everyone.';
+      'If you enjoy using our Qi Gong app, please take a moment to rate it. Your feedback helps us improve the app for everyone.';
 
   @override
   String get later => 'Later';
@@ -367,7 +367,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goodNight => 'Good Night';
 
   @override
-  String get readyForTaiChi => 'Ready for Tai Chi?';
+  String get readyForTaiChi => 'Ready for Qi Gong?';
 
   @override
   String get all => 'All';
@@ -411,7 +411,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trackInnerPeace => 'Inner Peace';
 
   @override
-  String get artistTaiChiMasters => 'Tai Chi Masters';
+  String get artistTaiChiMasters => 'Qi Gong Masters';
 
   @override
   String get artistNatureSounds => 'Nature Sounds';
@@ -485,7 +485,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultVideoDescription =>
-      'Master the art of Tai Chi with this comprehensive lesson. Learn proper form, breathing techniques, and fluid movements that will enhance your practice.';
+      'Master the art of Qi Gong with this comprehensive lesson. Learn proper form, breathing techniques, and fluid movements that will enhance your practice.';
 
   @override
   String get premiumContent => 'Premium Content';
@@ -515,7 +515,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Failed to initialize the app. Please check your internet connection and try again.';
 
   @override
-  String get appTagline => 'Master the Art of Tai Chi';
+  String get appTagline => 'Master the Art of Qi Gong';
 
   @override
   String get noInternetNoCachedData =>

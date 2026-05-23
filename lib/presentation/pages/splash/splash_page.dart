@@ -182,7 +182,7 @@ class _SplashPageState extends State<SplashPage>
             FadeTransition(
               opacity: _fadeAnimation,
               child: Text(
-                'Tai Chi Workout',
+                'Healing Workout',
                 style: theme.textTheme.headlineLarge?.copyWith(
                   color: theme.colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
@@ -196,7 +196,7 @@ class _SplashPageState extends State<SplashPage>
             FadeTransition(
               opacity: _fadeAnimation,
               child: Text(
-                'Master the Art of Tai Chi',
+                'Master the Art of Qi Gong',
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onPrimary.withValues(alpha: 0.9),
                 ),

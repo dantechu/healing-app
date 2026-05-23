@@ -53,17 +53,17 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const TaiChiWorkoutApp());
+  runApp(const QiGongHealingWorkoutApp());
 }
 
-class TaiChiWorkoutApp extends StatefulWidget {
-  const TaiChiWorkoutApp({super.key});
+class QiGongHealingWorkoutApp extends StatefulWidget {
+  const QiGongHealingWorkoutApp({super.key});
 
   @override
-  State<TaiChiWorkoutApp> createState() => _TaiChiWorkoutAppState();
+  State<QiGongHealingWorkoutApp> createState() => _QiGongHealingWorkoutAppState();
 }
 
-class _TaiChiWorkoutAppState extends State<TaiChiWorkoutApp> with WidgetsBindingObserver {
+class _QiGongHealingWorkoutAppState extends State<QiGongHealingWorkoutApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -116,7 +116,7 @@ class _TaiChiWorkoutAppState extends State<TaiChiWorkoutApp> with WidgetsBinding
           return BlocBuilder<LocaleBloc, LocaleState>(
             builder: (context, localeState) {
               return MaterialApp(
-                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Tai Chi Workout',
+                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Qi Gong Healing Workout',
                 debugShowCheckedModeBanner: false,
 
                 // Theme configuration
