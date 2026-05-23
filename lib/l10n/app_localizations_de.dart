@@ -368,7 +368,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get goodNight => 'Gute Nacht';
 
   @override
-  String get readyForTaiChi => 'Bereit für Qi Gong?';
+  String get readyForTaiChi => 'Bereit für Heiltraining?';
 
   @override
   String get all => 'Alle';

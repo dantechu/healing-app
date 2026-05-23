@@ -366,7 +366,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get goodNight => '안녕히 주무세요';
 
   @override
-  String get readyForTaiChi => '기공을 시작할 준비가 되셨나요?';
+  String get readyForTaiChi => '힐링 운동을 시작할 준비가 되셨나요?';
 
   @override
   String get all => '전체';

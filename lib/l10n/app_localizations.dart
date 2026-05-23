@@ -777,7 +777,7 @@ abstract class AppLocalizations {
   /// No description provided for @readyForTaiChi.
   ///
   /// In en, this message translates to:
-  /// **'Ready for Qi Gong?'**
+  /// **'Ready for Healing Workout?'**
   String get readyForTaiChi;
 
   /// No description provided for @all.

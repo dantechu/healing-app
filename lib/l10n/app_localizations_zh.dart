@@ -365,7 +365,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goodNight => '晚安';
 
   @override
-  String get readyForTaiChi => '准备好练气功了吗？';
+  String get readyForTaiChi => '准备好养生锻炼了吗？';
 
   @override
   String get all => '全部';

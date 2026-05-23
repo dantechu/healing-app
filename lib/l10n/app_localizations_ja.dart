@@ -366,7 +366,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get goodNight => 'おやすみなさい';
 
   @override
-  String get readyForTaiChi => '気功の準備はできましたか？';
+  String get readyForTaiChi => 'ヒーリングワークアウトの準備はできましたか？';
 
   @override
   String get all => 'すべて';
