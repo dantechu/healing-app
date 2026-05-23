@@ -111,7 +111,7 @@ abstract class AppLocalizations {
   /// Application name
   ///
   /// In en, this message translates to:
-  /// **'Tai Chi Workout'**
+  /// **'Qi Gong Healing Workout'**
   String get appName;
 
   /// No description provided for @home.

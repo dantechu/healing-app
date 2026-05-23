@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import 'music_player_page.dart';
 import '../breathing/breathing_timer_page.dart';
@@ -14,25 +15,25 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
   late TabController _tabController;
   int _currentTabIndex = 0;
 
-  // Define gradients for each tab
-  final _musicGradient = const LinearGradient(
+  // Define gradients for each tab - using healing theme colors
+  final _musicGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFFFF6B6B),
-      Color(0x00FF6B6B),
+      AppColors.softLavender.withOpacity(0.3),
+      AppColors.softLavender.withOpacity(0.0),
     ],
-    stops: [0.0, 0.3],
+    stops: const [0.0, 0.4],
   );
 
-  final _breathingGradient = const LinearGradient(
+  final _breathingGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0x266B73FF), // #6B73FF with 15% opacity
+      AppColors.oceanTeal.withOpacity(0.2),
       Colors.transparent,
     ],
-    stops: [0.0, 0.5],
+    stops: const [0.0, 0.5],
   );
 
   @override

@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appName => '太极健身';
+  String get appName => '气功养生锻炼';
 
   @override
   String get home => '首页';

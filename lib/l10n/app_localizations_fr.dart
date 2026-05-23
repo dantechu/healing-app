@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appName => 'Entraînement Tai Chi';
+  String get appName => 'Qi Gong Entraînement Guérissant';
 
   @override
   String get home => 'Accueil';

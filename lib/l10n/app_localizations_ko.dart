@@ -9,7 +9,7 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get appName => '태극권 운동';
+  String get appName => '기공 힐링 운동';
 
   @override
   String get home => '홈';
