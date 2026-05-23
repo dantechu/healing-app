@@ -3,28 +3,28 @@ import 'app_colors.dart';
 
 class AppTheme {
   // ═══════════════════════════════════════════════════════════════════════════
-  // LIGHT THEME - Calm, Serene, Ocean-inspired
+  // LIGHT THEME - Deep Navy, Calm, Sophisticated
   // ═══════════════════════════════════════════════════════════════════════════
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
 
-    // Color Scheme - Ocean Teal primary with soft accents
+    // Color Scheme - Deep Navy primary with teal and gold accents
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.oceanTeal,
+      seedColor: AppColors.deepNavy,
       brightness: Brightness.light,
-      primary: AppColors.oceanTeal,
+      primary: AppColors.deepNavy,
       onPrimary: Colors.white,
-      primaryContainer: AppColors.oceanTealLight.withOpacity(0.3),
-      onPrimaryContainer: AppColors.oceanTealDark,
-      secondary: AppColors.softLavender,
+      primaryContainer: AppColors.deepNavyLight.withOpacity(0.2),
+      onPrimaryContainer: AppColors.deepNavyDark,
+      secondary: AppColors.softTeal,
       onSecondary: Colors.white,
-      secondaryContainer: AppColors.softLavenderLight.withOpacity(0.4),
-      onSecondaryContainer: AppColors.softLavenderDark,
-      tertiary: AppColors.sageGreen,
+      secondaryContainer: AppColors.softTealLight.withOpacity(0.3),
+      onSecondaryContainer: AppColors.softTealDark,
+      tertiary: AppColors.warmGold,
       onTertiary: AppColors.textPrimary,
-      tertiaryContainer: AppColors.sageGreenLight.withOpacity(0.4),
-      onTertiaryContainer: AppColors.sageGreenDark,
+      tertiaryContainer: AppColors.warmGoldLight.withOpacity(0.3),
+      onTertiaryContainer: AppColors.warmGoldDark,
       surface: AppColors.backgroundLight,
       onSurface: AppColors.textPrimary,
       surfaceContainerHighest: Colors.white,
@@ -143,7 +143,7 @@ class AppTheme {
     // Card theme - Soft, organic corners
     cardTheme: CardThemeData(
       elevation: AppColors.elevationCard,
-      shadowColor: AppColors.oceanTeal.withOpacity(0.08),
+      shadowColor: AppColors.deepNavy.withOpacity(0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusCard),
       ),
@@ -176,11 +176,11 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         minimumSize: Size(120, 52),
         elevation: AppColors.elevationButton,
-        shadowColor: AppColors.oceanTeal.withOpacity(0.2),
+        shadowColor: AppColors.deepNavy.withOpacity(0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        backgroundColor: AppColors.oceanTeal,
+        backgroundColor: AppColors.deepNavy,
         foregroundColor: Colors.white,
         textStyle: TextStyle(
           fontSize: 15,
@@ -196,8 +196,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        side: BorderSide(color: AppColors.oceanTeal, width: 1.5),
-        foregroundColor: AppColors.oceanTeal,
+        side: BorderSide(color: AppColors.deepNavy, width: 1.5),
+        foregroundColor: AppColors.deepNavy,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -212,7 +212,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        foregroundColor: AppColors.oceanTeal,
+        foregroundColor: AppColors.deepNavy,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -223,7 +223,7 @@ class AppTheme {
 
     // Floating Action Button - Soft, prominent
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.oceanTeal,
+      backgroundColor: AppColors.deepNavy,
       foregroundColor: Colors.white,
       elevation: AppColors.elevationFab,
       shape: RoundedRectangleBorder(
@@ -233,19 +233,19 @@ class AppTheme {
 
     // Bottom navigation - Clean, minimal
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AppColors.oceanTeal.withOpacity(0.15),
+      indicatorColor: AppColors.deepNavy.withOpacity(0.12),
       height: 68,
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       elevation: AppColors.elevationBottomNav,
-      shadowColor: AppColors.oceanTeal.withOpacity(0.1),
+      shadowColor: AppColors.deepNavy.withOpacity(0.1),
       labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
             return TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: AppColors.oceanTeal,
+              color: AppColors.deepNavy,
             );
           }
           return TextStyle(
@@ -259,7 +259,7 @@ class AppTheme {
         (states) {
           if (states.contains(WidgetState.selected)) {
             return IconThemeData(
-              color: AppColors.oceanTeal,
+              color: AppColors.deepNavy,
               size: AppColors.iconMedium,
             );
           }
@@ -285,7 +285,7 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
-        borderSide: BorderSide(color: AppColors.oceanTeal, width: 2),
+        borderSide: BorderSide(color: AppColors.deepNavy, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
@@ -301,13 +301,13 @@ class AppTheme {
     // Chip theme - Rounded, organic
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.backgroundLightAlt,
-      selectedColor: AppColors.oceanTeal.withOpacity(0.15),
+      selectedColor: AppColors.deepNavy.withOpacity(0.12),
       labelStyle: TextStyle(
         color: AppColors.textPrimary,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
-      secondaryLabelStyle: TextStyle(color: AppColors.oceanTeal),
+      secondaryLabelStyle: TextStyle(color: AppColors.deepNavy),
       brightness: Brightness.light,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusChip),
@@ -321,17 +321,17 @@ class AppTheme {
 
     // Progress indicator
     progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: AppColors.oceanTeal,
-      linearTrackColor: AppColors.oceanTeal.withOpacity(0.15),
-      circularTrackColor: AppColors.oceanTeal.withOpacity(0.15),
+      color: AppColors.deepNavy,
+      linearTrackColor: AppColors.deepNavy.withOpacity(0.12),
+      circularTrackColor: AppColors.deepNavy.withOpacity(0.12),
     ),
 
     // Slider theme - Smooth, calming
     sliderTheme: SliderThemeData(
-      activeTrackColor: AppColors.oceanTeal,
-      inactiveTrackColor: AppColors.oceanTeal.withOpacity(0.2),
-      thumbColor: AppColors.oceanTeal,
-      overlayColor: AppColors.oceanTeal.withOpacity(0.1),
+      activeTrackColor: AppColors.deepNavy,
+      inactiveTrackColor: AppColors.deepNavy.withOpacity(0.2),
+      thumbColor: AppColors.deepNavy,
+      overlayColor: AppColors.deepNavy.withOpacity(0.1),
       trackHeight: 4,
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
     ),
@@ -378,7 +378,7 @@ class AppTheme {
       thumbColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTeal;
+            return AppColors.deepNavy;
           }
           return AppColors.textTertiary;
         },
@@ -386,7 +386,7 @@ class AppTheme {
       trackColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTeal.withOpacity(0.4);
+            return AppColors.deepNavy.withOpacity(0.4);
           }
           return AppColors.dividerLight;
         },
@@ -398,7 +398,7 @@ class AppTheme {
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTeal;
+            return AppColors.deepNavy;
           }
           return Colors.transparent;
         },
@@ -414,7 +414,7 @@ class AppTheme {
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTeal;
+            return AppColors.deepNavy;
           }
           return AppColors.textSecondary;
         },
@@ -440,34 +440,34 @@ class AppTheme {
 
     // Primary icon theme
     primaryIconTheme: IconThemeData(
-      color: AppColors.oceanTeal,
+      color: AppColors.deepNavy,
       size: AppColors.iconMedium,
     ),
   );
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // DARK THEME - Deep Ocean, Serene Night
+  // DARK THEME - Deep Midnight, Serene Night
   // ═══════════════════════════════════════════════════════════════════════════
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
 
-    // Color Scheme - Ocean Teal Light for dark mode visibility
+    // Color Scheme - Navy Light for dark mode visibility
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.oceanTealLight,
+      seedColor: AppColors.deepNavyLight,
       brightness: Brightness.dark,
-      primary: AppColors.oceanTealLight,
+      primary: AppColors.deepNavyLight,
       onPrimary: AppColors.backgroundDark,
-      primaryContainer: AppColors.oceanTeal.withOpacity(0.3),
-      onPrimaryContainer: AppColors.oceanTealLight,
-      secondary: AppColors.softLavenderLight,
+      primaryContainer: AppColors.deepNavy.withOpacity(0.3),
+      onPrimaryContainer: AppColors.deepNavyLight,
+      secondary: AppColors.softTealLight,
       onSecondary: AppColors.backgroundDark,
-      secondaryContainer: AppColors.softLavender.withOpacity(0.3),
-      onSecondaryContainer: AppColors.softLavenderLight,
-      tertiary: AppColors.sageGreenLight,
+      secondaryContainer: AppColors.softTeal.withOpacity(0.3),
+      onSecondaryContainer: AppColors.softTealLight,
+      tertiary: AppColors.warmGoldLight,
       onTertiary: AppColors.backgroundDark,
-      tertiaryContainer: AppColors.sageGreen.withOpacity(0.3),
-      onTertiaryContainer: AppColors.sageGreenLight,
+      tertiaryContainer: AppColors.warmGold.withOpacity(0.3),
+      onTertiaryContainer: AppColors.warmGoldLight,
       surface: AppColors.surfaceDark,
       onSurface: AppColors.textPrimaryDark,
       surfaceContainerHighest: AppColors.surfaceDarkAlt,
@@ -619,12 +619,12 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         minimumSize: Size(120, 52),
         elevation: AppColors.elevationButton,
-        shadowColor: AppColors.oceanTealLight.withOpacity(0.2),
+        shadowColor: AppColors.deepNavyLight.withOpacity(0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        backgroundColor: AppColors.oceanTealLight,
-        foregroundColor: AppColors.backgroundDark,
+        backgroundColor: AppColors.deepNavyLight,
+        foregroundColor: Colors.white,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -639,8 +639,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        side: BorderSide(color: AppColors.oceanTealLight, width: 1.5),
-        foregroundColor: AppColors.oceanTealLight,
+        side: BorderSide(color: AppColors.deepNavyLight, width: 1.5),
+        foregroundColor: AppColors.deepNavyLight,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -655,7 +655,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        foregroundColor: AppColors.oceanTealLight,
+        foregroundColor: AppColors.deepNavyLight,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -666,8 +666,8 @@ class AppTheme {
 
     // Floating Action Button
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.oceanTealLight,
-      foregroundColor: AppColors.backgroundDark,
+      backgroundColor: AppColors.deepNavyLight,
+      foregroundColor: Colors.white,
       elevation: AppColors.elevationFab,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusLarge),
@@ -676,7 +676,7 @@ class AppTheme {
 
     // Bottom navigation
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AppColors.oceanTealLight.withOpacity(0.2),
+      indicatorColor: AppColors.deepNavyLight.withOpacity(0.2),
       height: 68,
       backgroundColor: AppColors.surfaceDark,
       surfaceTintColor: Colors.transparent,
@@ -688,7 +688,7 @@ class AppTheme {
             return TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: AppColors.oceanTealLight,
+              color: AppColors.deepNavyLight,
             );
           }
           return TextStyle(
@@ -702,7 +702,7 @@ class AppTheme {
         (states) {
           if (states.contains(WidgetState.selected)) {
             return IconThemeData(
-              color: AppColors.oceanTealLight,
+              color: AppColors.deepNavyLight,
               size: AppColors.iconMedium,
             );
           }
@@ -728,7 +728,7 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
-        borderSide: BorderSide(color: AppColors.oceanTealLight, width: 2),
+        borderSide: BorderSide(color: AppColors.deepNavyLight, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
@@ -744,13 +744,13 @@ class AppTheme {
     // Chip theme
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.surfaceDarkAlt,
-      selectedColor: AppColors.oceanTealLight.withOpacity(0.2),
+      selectedColor: AppColors.deepNavyLight.withOpacity(0.2),
       labelStyle: TextStyle(
         color: AppColors.textPrimaryDark,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
-      secondaryLabelStyle: TextStyle(color: AppColors.oceanTealLight),
+      secondaryLabelStyle: TextStyle(color: AppColors.deepNavyLight),
       brightness: Brightness.dark,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusChip),
@@ -764,17 +764,17 @@ class AppTheme {
 
     // Progress indicator
     progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: AppColors.oceanTealLight,
-      linearTrackColor: AppColors.oceanTealLight.withOpacity(0.2),
-      circularTrackColor: AppColors.oceanTealLight.withOpacity(0.2),
+      color: AppColors.deepNavyLight,
+      linearTrackColor: AppColors.deepNavyLight.withOpacity(0.2),
+      circularTrackColor: AppColors.deepNavyLight.withOpacity(0.2),
     ),
 
     // Slider theme
     sliderTheme: SliderThemeData(
-      activeTrackColor: AppColors.oceanTealLight,
-      inactiveTrackColor: AppColors.oceanTealLight.withOpacity(0.25),
-      thumbColor: AppColors.oceanTealLight,
-      overlayColor: AppColors.oceanTealLight.withOpacity(0.1),
+      activeTrackColor: AppColors.deepNavyLight,
+      inactiveTrackColor: AppColors.deepNavyLight.withOpacity(0.25),
+      thumbColor: AppColors.deepNavyLight,
+      overlayColor: AppColors.deepNavyLight.withOpacity(0.1),
       trackHeight: 4,
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
     ),
@@ -821,7 +821,7 @@ class AppTheme {
       thumbColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTealLight;
+            return AppColors.deepNavyLight;
           }
           return AppColors.textTertiaryDark;
         },
@@ -829,7 +829,7 @@ class AppTheme {
       trackColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTealLight.withOpacity(0.4);
+            return AppColors.deepNavyLight.withOpacity(0.4);
           }
           return AppColors.dividerDark;
         },
@@ -841,12 +841,12 @@ class AppTheme {
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTealLight;
+            return AppColors.deepNavyLight;
           }
           return Colors.transparent;
         },
       ),
-      checkColor: WidgetStateProperty.all(AppColors.backgroundDark),
+      checkColor: WidgetStateProperty.all(Colors.white),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
@@ -857,7 +857,7 @@ class AppTheme {
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.oceanTealLight;
+            return AppColors.deepNavyLight;
           }
           return AppColors.textSecondaryDark;
         },
@@ -883,7 +883,7 @@ class AppTheme {
 
     // Primary icon theme
     primaryIconTheme: IconThemeData(
-      color: AppColors.oceanTealLight,
+      color: AppColors.deepNavyLight,
       size: AppColors.iconMedium,
     ),
   );

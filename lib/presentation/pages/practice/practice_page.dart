@@ -20,8 +20,8 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.softLavender.withOpacity(0.3),
-      AppColors.softLavender.withOpacity(0.0),
+      AppColors.softTeal.withOpacity(0.2),
+      AppColors.softTeal.withOpacity(0.0),
     ],
     stops: const [0.0, 0.4],
   );
@@ -30,7 +30,7 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.oceanTeal.withOpacity(0.2),
+      AppColors.deepNavy.withOpacity(0.15),
       Colors.transparent,
     ],
     stops: const [0.0, 0.5],

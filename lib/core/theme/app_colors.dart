@@ -2,57 +2,57 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // ═══════════════════════════════════════════════════════════════════════════
-  // PRIMARY COLORS - Ocean Teal (Calm, Flow, Clarity)
+  // PRIMARY COLORS - Deep Navy/Midnight Blue (Calm, Depth, Trust)
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color oceanTeal = Color(0xFF4DB6AC);
-  static const Color oceanTealLight = Color(0xFF80CBC4);
-  static const Color oceanTealDark = Color(0xFF00897B);
-  static const Color oceanTealSoft = Color(0xFF7ECDC3);
+  static const Color deepNavy = Color(0xFF1E3A5F);
+  static const Color deepNavyLight = Color(0xFF2D5A8A);
+  static const Color deepNavyDark = Color(0xFF142840);
+  static const Color deepNavySoft = Color(0xFF3D6B9E);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // SECONDARY COLORS - Soft Lavender (Spirituality, Mindfulness)
+  // SECONDARY COLORS - Soft Teal (Healing, Balance, Serenity)
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color softLavender = Color(0xFFB39DDB);
-  static const Color softLavenderLight = Color(0xFFD1C4E9);
-  static const Color softLavenderDark = Color(0xFF9575CD);
+  static const Color softTeal = Color(0xFF5BA3A3);
+  static const Color softTealLight = Color(0xFF7BC4C4);
+  static const Color softTealDark = Color(0xFF3D7A7A);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // TERTIARY COLORS - Sage Green (Balance, Renewal, Nature)
+  // TERTIARY COLORS - Warm Gold (Energy, Chi, Vitality)
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color sageGreen = Color(0xFFA5D6A7);
-  static const Color sageGreenLight = Color(0xFFC8E6C9);
-  static const Color sageGreenDark = Color(0xFF81C784);
+  static const Color warmGold = Color(0xFFC9A962);
+  static const Color warmGoldLight = Color(0xFFE0CCA0);
+  static const Color warmGoldDark = Color(0xFFA68B45);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // BACKGROUND COLORS - Soft, Serene Tones
+  // BACKGROUND COLORS - Cool, Serene Tones
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color backgroundLight = Color(0xFFF5F9F9);      // Soft teal-tinted white
-  static const Color backgroundLightAlt = Color(0xFFEDF5F4);   // Slightly deeper for contrast
-  static const Color backgroundDark = Color(0xFF0F1A1A);       // Deep ocean night
-  static const Color surfaceDark = Color(0xFF1A2828);          // Elevated dark surface
-  static const Color surfaceDarkAlt = Color(0xFF243434);       // Cards in dark mode
+  static const Color backgroundLight = Color(0xFFF5F7FA);      // Cool white with blue tint
+  static const Color backgroundLightAlt = Color(0xFFEBEFF5);   // Slightly deeper for contrast
+  static const Color backgroundDark = Color(0xFF0D1520);       // Deep midnight
+  static const Color surfaceDark = Color(0xFF162030);          // Elevated dark surface
+  static const Color surfaceDarkAlt = Color(0xFF1E2A3D);       // Cards in dark mode
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // TEXT COLORS - Muted, Easy on Eyes
+  // TEXT COLORS - Clear, Readable
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color textPrimary = Color(0xFF1A3333);          // Deep teal-gray
-  static const Color textSecondary = Color(0xFF5A7373);        // Muted teal-gray
-  static const Color textTertiary = Color(0xFF8A9E9E);         // Subtle hint text
-  static const Color textPrimaryDark = Color(0xFFE8F4F4);      // Soft white with teal tint
-  static const Color textSecondaryDark = Color(0xFFA8C4C4);    // Muted light teal
-  static const Color textTertiaryDark = Color(0xFF6A8888);     // Subtle dark mode hint
+  static const Color textPrimary = Color(0xFF1A2535);          // Deep blue-gray
+  static const Color textSecondary = Color(0xFF4A5568);        // Muted blue-gray
+  static const Color textTertiary = Color(0xFF8A94A6);         // Subtle hint text
+  static const Color textPrimaryDark = Color(0xFFE8ECF2);      // Soft blue-white
+  static const Color textSecondaryDark = Color(0xFFA8B5C8);    // Muted light blue
+  static const Color textTertiaryDark = Color(0xFF6B7A8F);     // Subtle dark mode hint
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATUS COLORS - Soft, Non-Jarring
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color errorLight = Color(0xFFE57373);           // Soft coral
-  static const Color errorDark = Color(0xFFEF9A9A);            // Lighter coral for dark
-  static const Color success = Color(0xFF81C784);              // Soft green
-  static const Color successDark = Color(0xFFA5D6A7);          // Lighter green for dark
-  static const Color warning = Color(0xFFFFB74D);              // Soft amber
-  static const Color warningDark = Color(0xFFFFCC80);          // Lighter amber for dark
-  static const Color info = Color(0xFF64B5F6);                 // Soft blue
-  static const Color infoDark = Color(0xFF90CAF9);             // Lighter blue for dark
+  static const Color errorLight = Color(0xFFDC6B6B);           // Soft muted red
+  static const Color errorDark = Color(0xFFE89090);            // Lighter red for dark
+  static const Color success = Color(0xFF5BA37B);              // Soft forest green
+  static const Color successDark = Color(0xFF7BC49B);          // Lighter green for dark
+  static const Color warning = Color(0xFFD4A556);              // Warm amber warning
+  static const Color warningDark = Color(0xFFE8C080);          // Lighter amber for dark
+  static const Color info = Color(0xFF5B8DC9);                 // Soft blue
+  static const Color infoDark = Color(0xFF8BB5E0);             // Lighter blue for dark
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PREMIUM COLORS - Serene Gold
@@ -64,50 +64,50 @@ class AppColors {
   // ═══════════════════════════════════════════════════════════════════════════
   // ACCENT COLORS - For Special Elements
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color accentCoral = Color(0xFFFFAB91);          // Soft coral accent
-  static const Color accentSky = Color(0xFF81D4FA);            // Sky blue accent
-  static const Color accentPeach = Color(0xFFFFCCBC);          // Peach accent
-  static const Color accentMint = Color(0xFFB2DFDB);           // Mint accent
+  static const Color accentSky = Color(0xFF7BA8D4);            // Sky blue accent
+  static const Color accentTeal = Color(0xFF5BA3A3);           // Teal accent
+  static const Color accentGold = Color(0xFFC9A962);           // Gold accent
+  static const Color accentLavender = Color(0xFF9B8DC2);       // Soft lavender accent
 
   // ═══════════════════════════════════════════════════════════════════════════
   // GRADIENT COLORS - Flowing, Organic
   // ═══════════════════════════════════════════════════════════════════════════
   static const List<Color> primaryGradient = [
-    Color(0xFF80CBC4),
-    Color(0xFF4DB6AC),
-    Color(0xFF26A69A),
+    Color(0xFF2D5A8A),
+    Color(0xFF1E3A5F),
+    Color(0xFF142840),
   ];
 
   static const List<Color> breathingGradient = [
-    Color(0xFFB2DFDB),                                         // Soft mint
-    Color(0xFF80CBC4),                                         // Light teal
-    Color(0xFF4DB6AC),                                         // Ocean teal
-    Color(0xFF26A69A),                                         // Deep teal
+    Color(0xFF7BC4C4),                                         // Soft teal light
+    Color(0xFF5BA3A3),                                         // Soft teal
+    Color(0xFF3D7A7A),                                         // Soft teal dark
+    Color(0xFF1E3A5F),                                         // Deep navy
   ];
 
   static const List<Color> meditationGradient = [
-    Color(0xFFD1C4E9),                                         // Light lavender
-    Color(0xFFB39DDB),                                         // Soft lavender
-    Color(0xFF9575CD),                                         // Medium lavender
+    Color(0xFF3D6B9E),                                         // Navy soft
+    Color(0xFF1E3A5F),                                         // Deep navy
+    Color(0xFF142840),                                         // Navy dark
   ];
 
   static const List<Color> healingGradient = [
-    Color(0xFFA5D6A7),                                         // Sage green
-    Color(0xFF80CBC4),                                         // Light teal
-    Color(0xFFB39DDB),                                         // Soft lavender
+    Color(0xFF5BA3A3),                                         // Soft teal
+    Color(0xFF1E3A5F),                                         // Deep navy
+    Color(0xFFC9A962),                                         // Warm gold
   ];
 
   static const List<Color> sunriseGradient = [
-    Color(0xFFFFCCBC),                                         // Soft peach
-    Color(0xFFFFAB91),                                         // Coral
-    Color(0xFFFF8A65),                                         // Warm coral
+    Color(0xFFE0CCA0),                                         // Gold light
+    Color(0xFFC9A962),                                         // Warm gold
+    Color(0xFFA68B45),                                         // Gold dark
   ];
 
   static const List<Color> oceanGradient = [
-    Color(0xFFE0F7FA),                                         // Lightest cyan
-    Color(0xFF80DEEA),                                         // Light cyan
-    Color(0xFF4DD0E1),                                         // Cyan
-    Color(0xFF26C6DA),                                         // Deep cyan
+    Color(0xFF7BC4C4),                                         // Light teal
+    Color(0xFF5BA3A3),                                         // Soft teal
+    Color(0xFF2D5A8A),                                         // Navy light
+    Color(0xFF1E3A5F),                                         // Deep navy
   ];
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -172,30 +172,30 @@ class AppColors {
   // ═══════════════════════════════════════════════════════════════════════════
   // VIDEO PLAYER COLORS
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color videoControlsBackground = Color(0xCC0F1A1A);
-  static const Color videoProgressPlayed = oceanTeal;
+  static const Color videoControlsBackground = Color(0xCC0D1520);
+  static const Color videoProgressPlayed = deepNavy;
   static const Color videoProgressBuffered = Color(0x4DFFFFFF);
   static const Color videoProgressBackground = Color(0x33FFFFFF);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // AD BANNER COLORS
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color adBannerBackground = Color(0xFFEDF5F4);
-  static const Color adBannerBorder = Color(0xFFD0E0DE);
+  static const Color adBannerBackground = Color(0xFFEBEFF5);
+  static const Color adBannerBorder = Color(0xFFD0D8E5);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SHIMMER COLORS
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color shimmerBase = Color(0xFFE0EEEC);
-  static const Color shimmerHighlight = Color(0xFFF0F8F7);
-  static const Color shimmerBaseDark = Color(0xFF2A3A3A);
-  static const Color shimmerHighlightDark = Color(0xFF3A4A4A);
+  static const Color shimmerBase = Color(0xFFDCE3ED);
+  static const Color shimmerHighlight = Color(0xFFF0F3F8);
+  static const Color shimmerBaseDark = Color(0xFF253040);
+  static const Color shimmerHighlightDark = Color(0xFF354050);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // DIVIDER COLORS
   // ═══════════════════════════════════════════════════════════════════════════
-  static const Color dividerLight = Color(0xFFD8E8E6);
-  static const Color dividerDark = Color(0xFF2A3A3A);
+  static const Color dividerLight = Color(0xFFD8E0EB);
+  static const Color dividerDark = Color(0xFF2A3545);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // HELPER METHODS
