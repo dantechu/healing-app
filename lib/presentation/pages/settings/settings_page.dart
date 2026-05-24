@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../bloc/theme/theme_bloc.dart';
 import '../../bloc/theme/theme_event.dart';
@@ -419,6 +420,8 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildPremiumTile(BuildContext context) {
     final theme = Theme.of(context);
+    // Use theme-consistent sage green for premium status
+    const premiumColor = AppColors.success;
 
     return BlocBuilder<PremiumBloc, PremiumState>(
       builder: (context, premiumState) {
@@ -428,7 +431,7 @@ class SettingsPage extends StatelessWidget {
         return Card(
           elevation: 8,
           shadowColor: isPremium
-              ? Colors.green.withValues(alpha: 0.2)
+              ? premiumColor.withValues(alpha: 0.2)
               : theme.colorScheme.primary.withValues(alpha: 0.2),
           child: InkWell(
             onTap: () {
@@ -447,12 +450,12 @@ class SettingsPage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: isPremium
-                    ? Colors.green.withValues(alpha: 0.1)
+                    ? premiumColor.withValues(alpha: 0.12)
                     : theme.colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: isPremium
-                      ? Colors.green.withValues(alpha: 0.3)
+                      ? premiumColor.withValues(alpha: 0.3)
                       : theme.colorScheme.primary.withValues(alpha: 0.3),
                   width: 1,
                 ),
@@ -462,7 +465,7 @@ class SettingsPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: isPremium ? Colors.green : theme.colorScheme.primary,
+                      color: isPremium ? premiumColor : theme.colorScheme.primary,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -483,7 +486,7 @@ class SettingsPage extends StatelessWidget {
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontSize: 17,
                             color: isPremium
-                                ? Colors.green.shade900
+                                ? AppColors.warmBrownDark
                                 : theme.colorScheme.onPrimaryContainer,
                             fontWeight: FontWeight.w600,
                           ),
@@ -496,7 +499,7 @@ class SettingsPage extends StatelessWidget {
                           style: theme.textTheme.bodySmall?.copyWith(
                             fontSize: 13,
                             color: isPremium
-                                ? Colors.green.shade700.withValues(alpha: 0.8)
+                                ? AppColors.warmBrown.withValues(alpha: 0.8)
                                 : theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
                           ),
                         ),
@@ -506,7 +509,7 @@ class SettingsPage extends StatelessWidget {
                   Icon(
                     isPremium ? Icons.check_circle : Icons.arrow_forward_ios,
                     color: isPremium
-                        ? Colors.green
+                        ? premiumColor
                         : theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
                     size: 18,
                   ),

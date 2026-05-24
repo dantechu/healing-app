@@ -15,13 +15,13 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
   late TabController _tabController;
   int _currentTabIndex = 0;
 
-  // Define gradients for each tab - using healing theme colors
+  // Define gradients for each tab - using warm earth-tone healing colors
   final _musicGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.softTeal.withOpacity(0.2),
-      AppColors.softTeal.withOpacity(0.0),
+      AppColors.goldenTan.withOpacity(0.15),
+      AppColors.goldenTan.withOpacity(0.0),
     ],
     stops: const [0.0, 0.4],
   );
@@ -30,7 +30,7 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.deepNavy.withOpacity(0.15),
+      AppColors.warmBrown.withOpacity(0.12),
       Colors.transparent,
     ],
     stops: const [0.0, 0.5],

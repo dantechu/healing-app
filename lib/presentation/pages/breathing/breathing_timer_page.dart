@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../bloc/premium/premium_bloc.dart';
 import '../../bloc/premium/premium_state.dart';
@@ -80,7 +81,8 @@ class _BreathingSetupScreenState extends State<BreathingSetupScreen>
   late AnimationController _pulseController;
   late AnimationController _waveController;
 
-  static const Color _accentColor = Color(0xFF6B73FF);
+  // Use calming sage green for breathing - evokes nature and tranquility
+  static const Color _accentColor = AppColors.accentSage;
 
   @override
   void initState() {
@@ -438,7 +440,8 @@ class _BreathingSessionScreenState extends State<BreathingSessionScreen>
   final int _exhaleTime = 4;
   int _currentPhase = 0; // 0: inhale, 1: hold, 2: exhale
 
-  final Color _breathingColor = const Color(0xFF6B73FF);
+  // Use calming sage green for breathing - evokes nature and tranquility
+  final Color _breathingColor = AppColors.accentSage;
 
   List<String> get _phaseDescriptions => [
     AppLocalizations.of(context)?.breatheInSlowly ?? 'Breathe in slowly and deeply',

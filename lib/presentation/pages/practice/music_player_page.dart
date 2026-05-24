@@ -22,6 +22,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
   Duration _duration = const Duration(minutes: 5);
   static const int _trackCount = 4;
 
+  // Track colors using warm earth-tones to match app theme
   List<MusicTrack> _getTracks(BuildContext context) {
     return [
       MusicTrack(
@@ -29,7 +30,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
         artist: AppLocalizations.of(context)?.artistAmbientMeditation ?? 'Ambient Meditation',
         duration: const Duration(minutes: 5, seconds: 32),
         albumArt: '🌅',
-        color: const Color(0xFFFF6B6B),
+        color: const Color(0xFFD4A574),  // Warm amber - sunrise feel
         audioPath: 'audio/music/peaceful_morning.mp3',
       ),
       MusicTrack(
@@ -37,7 +38,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
         artist: AppLocalizations.of(context)?.artistDeepRelaxation ?? 'Deep Relaxation',
         duration: const Duration(minutes: 7, seconds: 18),
         albumArt: '🌊',
-        color: const Color(0xFF4ECDC4),
+        color: const Color(0xFF8BA37A),  // Sage green - natural flow
         audioPath: 'audio/music/flowing_water.mp3',
       ),
       MusicTrack(
@@ -45,7 +46,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
         artist: AppLocalizations.of(context)?.artistNewAgeZen ?? 'New Age Zen',
         duration: const Duration(minutes: 6, seconds: 45),
         albumArt: '🏔️',
-        color: const Color(0xFF95E1D3),
+        color: const Color(0xFFBF8B6B),  // Terracotta - earthy mountains
         audioPath: 'audio/music/mountain_breeze.mp3',
       ),
       MusicTrack(
@@ -53,7 +54,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
         artist: AppLocalizations.of(context)?.artistMeditationSounds ?? 'Meditation Sounds',
         duration: const Duration(minutes: 8, seconds: 12),
         albumArt: '🧘',
-        color: const Color(0xFFFFA07A),
+        color: const Color(0xFFC4A55A),  // Golden tan - grounding peace
         audioPath: 'audio/music/inner_peace.mp3',
       ),
     ];
