@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:healing_app/core/services/premium_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,17 +23,22 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.surface,
-      body: CustomScrollView(
+        backgroundColor: theme.colorScheme.surface,
+        body: CustomScrollView(
         slivers: [
           // Modern app bar with glassmorphism
           SliverAppBar(
             floating: true,
             snap: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor: theme.colorScheme.surface,
+            surfaceTintColor: Colors.transparent,
             elevation: 0,
+            systemOverlayStyle: isDark
+                ? SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent)
+                : SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
             flexibleSpace: ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -84,7 +90,7 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
+        ),
     );
   }
 

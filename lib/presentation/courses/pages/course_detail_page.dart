@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/localization_helper.dart';
 import '../../../l10n/app_localizations.dart';
@@ -28,6 +29,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return BlocListener<CoursesBloc, CoursesState>(
       listener: (context, state) {
@@ -62,9 +64,13 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             SliverAppBar(
               floating: true,
               snap: true,
-              backgroundColor: Colors.transparent,
+              backgroundColor: theme.colorScheme.surface,
+              surfaceTintColor: Colors.transparent,
               elevation: 0,
               toolbarHeight: 56,
+              systemOverlayStyle: isDark
+                  ? SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent)
+                  : SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
               flexibleSpace: ClipRect(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -116,7 +122,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
           ],
         ),
         bottomNavigationBar: _buildBottomButton(context),
-      ),
+        ),
     );
   }
 
