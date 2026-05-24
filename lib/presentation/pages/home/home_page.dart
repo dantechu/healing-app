@@ -123,107 +123,52 @@ class _HomePageState extends State<HomePage> {
         final theme = Theme.of(context);
         final isDark = theme.brightness == Brightness.dark;
 
-        return Container(
-          margin: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-          child: Stack(
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Decorative gradient blob - organic shape
-              Positioned(
-                right: -20,
-                top: -30,
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        AppColors.goldenTanLight.withValues(alpha: isDark ? 0.08 : 0.15),
-                        AppColors.goldenTan.withValues(alpha: 0.0),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Greeting with subtle styling
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            _getTimeBasedGreeting(),
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.primary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        // Course name with better typography
-                        Text(
-                          courseName.isNotEmpty ? courseName : (AppLocalizations.of(context)?.readyForTaiChi ?? 'Ready for Tai Chi?'),
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 22,
-                            letterSpacing: -0.5,
-                            color: theme.colorScheme.onSurface,
-                            height: 1.2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  // Modern organic icon container with glassmorphism
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                        width: 56,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              theme.colorScheme.primary.withValues(alpha: 0.2),
-                              theme.colorScheme.primary.withValues(alpha: 0.1),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: theme.colorScheme.primary.withValues(alpha: 0.2),
-                            width: 1.5,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: theme.colorScheme.primary.withValues(alpha: 0.15),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          Icons.self_improvement_rounded,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Greeting with subtle styling
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        _getTimeBasedGreeting(),
+                        style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.primary,
-                          size: 28,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.3,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    // Course name
+                    Text(
+                      courseName.isNotEmpty ? courseName : (AppLocalizations.of(context)?.readyForTaiChi ?? 'Ready for Tai Chi?'),
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 22,
+                        letterSpacing: -0.5,
+                        color: theme.colorScheme.onSurface,
+                        height: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Icon(
+                Icons.self_improvement_rounded,
+                color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                size: 32,
               ),
             ],
           ),
@@ -237,113 +182,86 @@ class _HomePageState extends State<HomePage> {
     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Container(
-            height: 54,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                    ? [
-                        Colors.white.withValues(alpha: 0.08),
-                        Colors.white.withValues(alpha: 0.04),
-                      ]
-                    : [
-                        Colors.white.withValues(alpha: 0.9),
-                        Colors.white.withValues(alpha: 0.7),
-                      ],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : theme.colorScheme.outline.withValues(alpha: 0.1),
-                width: 1,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.06),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: TextField(
-              controller: _searchController,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                fontSize: 15,
-                color: theme.colorScheme.onSurface,
-                fontWeight: FontWeight.w400,
-              ),
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)?.searchVideos ?? 'Search videos...',
-                hintStyle: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                ),
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 18, right: 12),
-                  child: Icon(
-                    Icons.search_rounded,
-                    size: 22,
-                    color: theme.colorScheme.primary.withValues(alpha: 0.7),
-                  ),
-                ),
-                prefixIconConstraints: const BoxConstraints(minWidth: 52),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.close_rounded,
-                            size: 20,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-                          ),
-                          onPressed: () {
-                            _searchController.clear();
-                            setState(() {
-                              _searchQuery = '';
-                            });
-                            _performSearch();
-                          },
-                        ),
-                      )
-                    : null,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-              ),
-              onChanged: (query) {
-                setState(() {
-                  _searchQuery = query;
-                });
-                _debounceTimer?.cancel();
-
-                if (query.isEmpty) {
-                  _performSearch();
-                } else {
-                  _debounceTimer = Timer(const Duration(milliseconds: 150), () {
-                    _performSearch();
-                  });
-                }
-              },
-              onSubmitted: (query) {
-                setState(() {
-                  _searchQuery = query;
-                });
-                _debounceTimer?.cancel();
-                _performSearch();
-              },
+      margin: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+      height: 46,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.06)
+            : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : theme.colorScheme.outline.withValues(alpha: 0.08),
+          width: 1,
+        ),
+      ),
+      child: TextField(
+        controller: _searchController,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          fontSize: 14,
+          color: theme.colorScheme.onSurface,
+          fontWeight: FontWeight.w400,
+        ),
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)?.searchVideos ?? 'Search videos...',
+          hintStyle: theme.textTheme.bodyMedium?.copyWith(
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 14, right: 10),
+            child: Icon(
+              Icons.search_rounded,
+              size: 20,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
             ),
           ),
+          prefixIconConstraints: const BoxConstraints(minWidth: 44),
+          suffixIcon: _searchQuery.isNotEmpty
+              ? IconButton(
+                  icon: Icon(
+                    Icons.close_rounded,
+                    size: 18,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                  ),
+                  onPressed: () {
+                    _searchController.clear();
+                    setState(() {
+                      _searchQuery = '';
+                    });
+                    _performSearch();
+                  },
+                )
+              : null,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
         ),
+        onChanged: (query) {
+          setState(() {
+            _searchQuery = query;
+          });
+          _debounceTimer?.cancel();
+
+          if (query.isEmpty) {
+            _performSearch();
+          } else {
+            _debounceTimer = Timer(const Duration(milliseconds: 150), () {
+              _performSearch();
+            });
+          }
+        },
+        onSubmitted: (query) {
+          setState(() {
+            _searchQuery = query;
+          });
+          _debounceTimer?.cancel();
+          _performSearch();
+        },
       ),
     );
   }
