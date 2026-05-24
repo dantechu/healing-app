@@ -1,8 +1,10 @@
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/services/thumbnail_cache_service.dart';
+import '../../core/theme/app_colors.dart';
 import '../../core/utils/localization_helper.dart';
 import '../../domain/entities/section.dart';
 import '../../domain/entities/video.dart';
@@ -92,41 +94,64 @@ class _VideoCardState extends State<VideoCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final isLocked = video.isPremium && !isPremiumUser;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: theme.colorScheme.outline.withValues(alpha: 0.08),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.shadow.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
-          child: SizedBox(
-            height: 100,
-            child: Row(
-              children: [
-                _buildThumbnail(theme, isLocked),
-                Expanded(
-                  child: _buildContent(theme, isLocked),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        Colors.white.withValues(alpha: 0.06),
+                        Colors.white.withValues(alpha: 0.02),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.95),
+                        Colors.white.withValues(alpha: 0.85),
+                      ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : theme.colorScheme.outline.withValues(alpha: 0.08),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.06),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
                 ),
               ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(20),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  height: 108,
+                  child: Row(
+                    children: [
+                      _buildThumbnail(theme, isLocked),
+                      Expanded(
+                        child: _buildContent(theme, isLocked),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -136,77 +161,137 @@ class _VideoCardState extends State<VideoCard> {
 
   Widget _buildThumbnail(ThemeData theme, bool isLocked) {
     return Container(
-      width: 110,
-      height: 100,
+      width: 120,
+      height: 108,
+      margin: const EdgeInsets.all(8),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
-        ),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Stack(
         fit: StackFit.expand,
         children: [
           // Thumbnail image or placeholder
-          _buildThumbnailImage(theme, isLocked),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: _buildThumbnailImage(theme, isLocked),
+          ),
 
-          // Play button overlay
-          if (!isLocked && !_thumbnailLoading && !_thumbnailError && (_thumbnailData != null || (video.thumbnailUrl != null && video.thumbnailUrl!.isNotEmpty)))
-            Center(
-              child: Container(
-                width: 40,
-                height: 40,
+          // Gradient overlay for better text readability
+          if (!isLocked)
+            Positioned.fill(
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.play_arrow_rounded,
-                  size: 26,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-
-          // Duration badge
-          if (video.duration.inSeconds > 0)
-            Positioned(
-              bottom: 6,
-              right: 6,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.75),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  _formatDuration(video.duration.inSeconds),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+                  borderRadius: BorderRadius.circular(14),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.3),
+                    ],
+                    stops: const [0.5, 1.0],
                   ),
                 ),
               ),
             ),
 
-          // Premium lock overlay
+          // Play button overlay - glassmorphic style
+          if (!isLocked && !_thumbnailLoading && !_thumbnailError && (_thumbnailData != null || (video.thumbnailUrl != null && video.thumbnailUrl!.isNotEmpty)))
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.25),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.play_arrow_rounded,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          // Duration badge - modern pill style
+          if (video.duration.inSeconds > 0)
+            Positioned(
+              bottom: 8,
+              right: 8,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.1),
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Text(
+                      _formatDuration(video.duration.inSeconds),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          // Premium lock overlay - modern style
           if (isLocked)
             Container(
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.55),
+                borderRadius: BorderRadius.circular(14),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.5),
+                    Colors.black.withValues(alpha: 0.7),
+                  ],
+                ),
               ),
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.3),
+                    color: Colors.white.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1.5,
+                    ),
                   ),
                   child: const Icon(
                     Icons.lock_rounded,
-                    size: 20,
+                    size: 18,
                     color: Colors.white,
                   ),
                 ),
@@ -319,78 +404,112 @@ class _VideoCardState extends State<VideoCard> {
 
   Widget _buildContent(ThemeData theme, bool isLocked) {
     final langCode = LocalizationHelper.getCurrentLanguageCode(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      padding: const EdgeInsets.fromLTRB(8, 12, 16, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Title row
-          Row(
+          // Title row with PRO badge
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  video.getLocalizedTitle(langCode),
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    height: 1.3,
-                    color: isLocked
-                        ? theme.colorScheme.onSurface.withValues(alpha: 0.5)
-                        : theme.colorScheme.onSurface,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      video.getLocalizedTitle(langCode),
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        height: 1.35,
+                        letterSpacing: -0.2,
+                        color: isLocked
+                            ? theme.colorScheme.onSurface.withValues(alpha: 0.5)
+                            : theme.colorScheme.onSurface,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                  if (isLocked) ...[
+                    const SizedBox(width: 8),
+                    // Modern PRO badge with gradient
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.goldenTan,
+                            AppColors.goldenTanDark,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.goldenTan.withValues(alpha: 0.3),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        'PRO',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 9,
+                          letterSpacing: 0.8,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
-              if (isLocked) ...[
-                const SizedBox(width: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        theme.colorScheme.tertiary.withValues(alpha: 0.2),
-                        theme.colorScheme.tertiary.withValues(alpha: 0.1),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    'PRO',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.tertiary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
-                ),
-              ],
             ],
           ),
-          // Category and action row
+          // Category and action row with improved styling
           Row(
             children: [
-              Icon(
-                Icons.folder_outlined,
-                size: 14,
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-              ),
-              const SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  _getLocalizedSectionName(langCode),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
-                    fontSize: 12,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              // Category chip
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.folder_rounded,
+                      size: 12,
+                      color: theme.colorScheme.primary.withValues(alpha: 0.8),
+                    ),
+                    const SizedBox(width: 4),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 90),
+                      child: Text(
+                        _getLocalizedSectionName(langCode),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // Bookmark button
+              const Spacer(),
+              // Bookmark button with animation
               BlocBuilder<BookmarkBloc, BookmarkState>(
                 builder: (context, state) {
                   final isBookmarked = state is BookmarkLoaded &&
@@ -399,23 +518,39 @@ class _VideoCardState extends State<VideoCard> {
                     onTap: () {
                       context.read<BookmarkBloc>().add(ToggleBookmark(video.id));
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: isBookmarked
+                            ? theme.colorScheme.primary.withValues(alpha: 0.12)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: Icon(
                         isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
                         color: isBookmarked
                             ? theme.colorScheme.primary
-                            : theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                            : theme.colorScheme.onSurface.withValues(alpha: 0.35),
                         size: 20,
                       ),
                     ),
                   );
                 },
               ),
-              Icon(
-                isLocked ? Icons.lock_outline_rounded : Icons.arrow_forward_ios_rounded,
-                color: theme.colorScheme.onSurface.withValues(alpha: isLocked ? 0.3 : 0.35),
-                size: isLocked ? 16 : 14,
+              const SizedBox(width: 4),
+              // Arrow indicator
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  isLocked ? Icons.lock_outline_rounded : Icons.arrow_forward_ios_rounded,
+                  color: theme.colorScheme.onSurface.withValues(alpha: isLocked ? 0.35 : 0.4),
+                  size: 14,
+                ),
               ),
             ],
           ),

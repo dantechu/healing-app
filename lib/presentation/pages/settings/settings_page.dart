@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:healing_app/core/services/premium_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,116 +21,239 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.settings ?? 'Settings'),
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildPremiumTile(context),
-          const SizedBox(height: 8),
-          _buildAppearanceSection(context),
-          const SizedBox(height: 8),
-          _buildLanguageSection(context),
-          const SizedBox(height: 8),
-          _buildAboutSection(context),
-          const SizedBox(height: 8),
-          _buildSupportSection(context),
+      backgroundColor: theme.colorScheme.surface,
+      body: CustomScrollView(
+        slivers: [
+          // Modern app bar with glassmorphism
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            flexibleSpace: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        theme.colorScheme.surface.withValues(alpha: 0.9),
+                        theme.colorScheme.surface.withValues(alpha: 0.7),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            title: Text(
+              AppLocalizations.of(context)?.settings ?? 'Settings',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.5,
+              ),
+            ),
+            centerTitle: true,
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _buildPremiumTile(context),
+                const SizedBox(height: 24),
+                _buildSectionLabel(context, AppLocalizations.of(context)?.appearance ?? 'Appearance', Icons.palette_outlined),
+                const SizedBox(height: 12),
+                _buildAppearanceSection(context),
+                const SizedBox(height: 24),
+                _buildSectionLabel(context, AppLocalizations.of(context)?.language ?? 'Language', Icons.language_rounded),
+                const SizedBox(height: 12),
+                _buildLanguageSection(context),
+                const SizedBox(height: 24),
+                _buildSectionLabel(context, AppLocalizations.of(context)?.about ?? 'About', Icons.info_outline_rounded),
+                const SizedBox(height: 12),
+                _buildAboutSection(context),
+                const SizedBox(height: 24),
+                _buildSectionLabel(context, AppLocalizations.of(context)?.support ?? 'Support', Icons.support_agent_rounded),
+                const SizedBox(height: 12),
+                _buildSupportSection(context),
+              ]),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildAppearanceSection(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.palette,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  AppLocalizations.of(context)?.appearance ?? 'Appearance',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
+  Widget _buildSectionLabel(BuildContext context, String label, IconData icon) {
+    final theme = Theme.of(context);
+
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            size: 16,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          label,
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: theme.colorScheme.primary,
+            letterSpacing: 0.3,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGlassmorphicCard(BuildContext context, {required Widget child}) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isDark
+                  ? [
+                      Colors.white.withValues(alpha: 0.08),
+                      Colors.white.withValues(alpha: 0.04),
+                    ]
+                  : [
+                      Colors.white.withValues(alpha: 0.95),
+                      Colors.white.withValues(alpha: 0.85),
+                    ],
             ),
-            const SizedBox(height: 12),
-            BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                String currentThemeName;
-                switch (state.themeMode) {
-                  case AppThemeMode.light:
-                    currentThemeName = AppLocalizations.of(context)?.light ?? 'Light';
-                    break;
-                  case AppThemeMode.dark:
-                    currentThemeName = AppLocalizations.of(context)?.dark ?? 'Dark';
-                    break;
-                  case AppThemeMode.system:
-                    currentThemeName = AppLocalizations.of(context)?.system ?? 'System';
-                    break;
-                }
-                return _buildCompactListItem(
-                  context,
-                  icon: Icons.brightness_6,
-                  title: AppLocalizations.of(context)?.theme ?? 'Theme',
-                  subtitle: currentThemeName,
-                  onTap: () => _showThemeDialog(context, state.themeMode),
-                  showTrailing: true,
-                  isLast: true,
-                );
-              },
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : theme.colorScheme.outline.withValues(alpha: 0.1),
+              width: 1,
             ),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.06),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: child,
         ),
       ),
     );
   }
 
+  Widget _buildAppearanceSection(BuildContext context) {
+    return _buildGlassmorphicCard(
+      context,
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          String currentThemeName;
+          IconData themeIcon;
+          switch (state.themeMode) {
+            case AppThemeMode.light:
+              currentThemeName = AppLocalizations.of(context)?.light ?? 'Light';
+              themeIcon = Icons.light_mode_rounded;
+              break;
+            case AppThemeMode.dark:
+              currentThemeName = AppLocalizations.of(context)?.dark ?? 'Dark';
+              themeIcon = Icons.dark_mode_rounded;
+              break;
+            case AppThemeMode.system:
+              currentThemeName = AppLocalizations.of(context)?.system ?? 'System';
+              themeIcon = Icons.settings_suggest_rounded;
+              break;
+          }
+          return _buildModernListItem(
+            context,
+            icon: themeIcon,
+            title: AppLocalizations.of(context)?.theme ?? 'Theme',
+            subtitle: currentThemeName,
+            onTap: () => _showThemeDialog(context, state.themeMode),
+            isLast: true,
+          );
+        },
+      ),
+    );
+  }
+
   void _showThemeDialog(BuildContext context, AppThemeMode currentMode) {
-    showDialog(
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.theme ?? 'Theme'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildThemeOption(
-              context,
-              dialogContext,
-              AppThemeMode.light,
-              currentMode,
-              Icons.light_mode,
-              AppLocalizations.of(context)?.light ?? 'Light',
+      backgroundColor: Colors.transparent,
+      builder: (dialogContext) => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: isDark
+                    ? [
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.08),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.98),
+                        Colors.white.withValues(alpha: 0.95),
+                      ],
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
             ),
-            _buildThemeOption(
-              context,
-              dialogContext,
-              AppThemeMode.dark,
-              currentMode,
-              Icons.dark_mode,
-              AppLocalizations.of(context)?.dark ?? 'Dark',
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  AppLocalizations.of(context)?.theme ?? 'Theme',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                _buildThemeOption(context, dialogContext, AppThemeMode.light, currentMode, Icons.light_mode_rounded, AppLocalizations.of(context)?.light ?? 'Light'),
+                const SizedBox(height: 12),
+                _buildThemeOption(context, dialogContext, AppThemeMode.dark, currentMode, Icons.dark_mode_rounded, AppLocalizations.of(context)?.dark ?? 'Dark'),
+                const SizedBox(height: 12),
+                _buildThemeOption(context, dialogContext, AppThemeMode.system, currentMode, Icons.settings_suggest_rounded, AppLocalizations.of(context)?.system ?? 'System'),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
+              ],
             ),
-            _buildThemeOption(
-              context,
-              dialogContext,
-              AppThemeMode.system,
-              currentMode,
-              Icons.settings_suggest,
-              AppLocalizations.of(context)?.system ?? 'System',
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -146,255 +270,355 @@ class SettingsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final isSelected = mode == currentMode;
 
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
-      ),
-      title: Text(
-        label,
-        style: TextStyle(
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          context.read<ThemeBloc>().add(ChangeTheme(mode));
+          Navigator.of(dialogContext).pop();
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: isSelected
+                ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      theme.colorScheme.primary.withValues(alpha: 0.15),
+                      theme.colorScheme.primary.withValues(alpha: 0.08),
+                    ],
+                  )
+                : null,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected
+                  ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                  : theme.colorScheme.outline.withValues(alpha: 0.1),
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? theme.colorScheme.primary.withValues(alpha: 0.15)
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  size: 22,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  label,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+              if (isSelected)
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    color: Colors.white,
+                    size: 14,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
-      trailing: isSelected
-          ? Icon(Icons.check, color: theme.colorScheme.primary)
-          : null,
-      onTap: () {
-        context.read<ThemeBloc>().add(ChangeTheme(mode));
-        Navigator.of(dialogContext).pop();
-      },
     );
   }
 
   Widget _buildLanguageSection(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.language,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  AppLocalizations.of(context)?.language ?? 'Language',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            BlocBuilder<LocaleBloc, LocaleState>(
-              builder: (context, state) {
-                // Find current language name
-                String currentLanguageName = 'English';
-                for (final language in AppConstants.supportedLocales) {
-                  if (language['code'] == state.locale.languageCode) {
-                    currentLanguageName = language['name'] as String;
-                    break;
-                  }
-                }
-                return _buildCompactListItem(
-                  context,
-                  icon: Icons.translate,
-                  title: AppLocalizations.of(context)?.language ?? 'Language',
-                  subtitle: currentLanguageName,
-                  onTap: () => _showLanguageDialog(context, state.locale),
-                  showTrailing: true,
-                  isLast: true,
-                );
-              },
-            ),
-          ],
-        ),
+    return _buildGlassmorphicCard(
+      context,
+      child: BlocBuilder<LocaleBloc, LocaleState>(
+        builder: (context, state) {
+          String currentLanguageName = 'English';
+          String currentFlag = '🇬🇧';
+          for (final language in AppConstants.supportedLocales) {
+            if (language['code'] == state.locale.languageCode) {
+              currentLanguageName = language['name'] as String;
+              currentFlag = language['flag'] as String;
+              break;
+            }
+          }
+          return _buildModernListItem(
+            context,
+            icon: Icons.translate_rounded,
+            title: AppLocalizations.of(context)?.language ?? 'Language',
+            subtitle: '$currentFlag  $currentLanguageName',
+            onTap: () => _showLanguageDialog(context, state.locale),
+            isLast: true,
+          );
+        },
       ),
     );
   }
 
   void _showLanguageDialog(BuildContext context, Locale currentLocale) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.language ?? 'Language'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: AppConstants.supportedLocales.map((language) {
-            final locale = Locale(language['code'] as String);
-            final isSelected = currentLocale.languageCode == locale.languageCode;
-
-            return ListTile(
-              leading: Text(
-                language['flag'] as String,
-                style: const TextStyle(fontSize: 24),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (dialogContext) => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: isDark
+                    ? [
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.08),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.98),
+                        Colors.white.withValues(alpha: 0.95),
+                      ],
               ),
-              title: Text(
-                language['name'] as String,
-                style: TextStyle(
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-              trailing: isSelected
-                  ? Icon(Icons.check, color: theme.colorScheme.primary)
-                  : null,
-              onTap: () {
-                context.read<LocaleBloc>().add(ChangeLocale(locale));
-                Navigator.of(dialogContext).pop();
-              },
-            );
-          }).toList(),
+                const SizedBox(height: 20),
+                Text(
+                  AppLocalizations.of(context)?.language ?? 'Language',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Flexible(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: AppConstants.supportedLocales.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    itemBuilder: (_, index) {
+                      final language = AppConstants.supportedLocales[index];
+                      final locale = Locale(language['code'] as String);
+                      final isSelected = currentLocale.languageCode == locale.languageCode;
+
+                      return Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            context.read<LocaleBloc>().add(ChangeLocale(locale));
+                            Navigator.of(dialogContext).pop();
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              gradient: isSelected
+                                  ? LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        theme.colorScheme.primary.withValues(alpha: 0.15),
+                                        theme.colorScheme.primary.withValues(alpha: 0.08),
+                                      ],
+                                    )
+                                  : null,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: isSelected
+                                    ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                                    : theme.colorScheme.outline.withValues(alpha: 0.1),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  language['flag'] as String,
+                                  style: const TextStyle(fontSize: 24),
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Text(
+                                    language['name'] as String,
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                                      color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                ),
+                                if (isSelected)
+                                  Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: theme.colorScheme.primary,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
   Widget _buildAboutSection(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.info,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  AppLocalizations.of(context)?.about ?? 'About',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            _buildCompactListItem(
-              context,
-              icon: Icons.person,
-              title: AppLocalizations.of(context)?.instructor ?? 'Instructor',
-              subtitle: AppLocalizations.of(context)?.johnSaxxon ?? 'John Saxxon',
-              onTap: () => _showInstructorDialog(context),
-            ),
-            _buildCompactListItem(
-              context,
-              icon: Icons.info_outline,
-              title: AppLocalizations.of(context)?.version ?? 'App Version',
-              subtitle: '${AppConstants.appVersion} (${AppConstants.bundleId})',
-            ),
-            _buildCompactListItem(
-              context,
-              icon: Icons.star_rate,
-              title: AppLocalizations.of(context)?.rateApp ?? 'Rate App',
-              onTap: () => _showRatingDialog(context),
-              showTrailing: true,
-            ),
-          ],
-        ),
+    return _buildGlassmorphicCard(
+      context,
+      child: Column(
+        children: [
+          _buildModernListItem(
+            context,
+            icon: Icons.person_rounded,
+            title: AppLocalizations.of(context)?.instructor ?? 'Instructor',
+            subtitle: AppLocalizations.of(context)?.johnSaxxon ?? 'John Saxxon',
+            onTap: () => _showInstructorDialog(context),
+          ),
+          _buildModernListItem(
+            context,
+            icon: Icons.info_outline_rounded,
+            title: AppLocalizations.of(context)?.version ?? 'App Version',
+            subtitle: AppConstants.appVersion,
+          ),
+          _buildModernListItem(
+            context,
+            icon: Icons.star_rounded,
+            title: AppLocalizations.of(context)?.rateApp ?? 'Rate App',
+            onTap: () => _showRatingDialog(context),
+            isLast: true,
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildSupportSection(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.support,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  AppLocalizations.of(context)?.support ?? 'Support',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            _buildCompactListItem(
-              context,
-              icon: Icons.email,
-              title: AppLocalizations.of(context)?.contactUs ?? 'Contact Support',
-              subtitle: AppConstants.supportEmail,
-              onTap: () => _launchEmail(AppConstants.supportEmail),
-              showTrailing: true,
-            ),
-            _buildCompactListItem(
-              context,
-              icon: Icons.web,
-              title: AppLocalizations.of(context)?.website ?? 'Website',
-              subtitle: AppConstants.website,
-              onTap: () => _launchUrl('https://${AppConstants.website}'),
-              showTrailing: true,
-            ),
-            _buildCompactListItem(
-              context,
-              icon: Icons.privacy_tip,
-              title: AppLocalizations.of(context)?.privacyPolicy ?? 'Privacy Policy',
-              onTap: () => _launchUrl(AppConstants.privacyPolicyUrl),
-              showTrailing: true,
-            ),
-            _buildCompactListItem(
-              context,
-              icon: Icons.description,
-              title: AppLocalizations.of(context)?.termsOfService ?? 'Terms of Service',
-              onTap: () => _launchUrl(AppConstants.termsOfServiceUrl),
-              showTrailing: true,
-              isLast: true,
-            ),
-          ],
-        ),
+    return _buildGlassmorphicCard(
+      context,
+      child: Column(
+        children: [
+          _buildModernListItem(
+            context,
+            icon: Icons.email_rounded,
+            title: AppLocalizations.of(context)?.contactUs ?? 'Contact Support',
+            subtitle: AppConstants.supportEmail,
+            onTap: () => _launchEmail(AppConstants.supportEmail),
+          ),
+          _buildModernListItem(
+            context,
+            icon: Icons.language_rounded,
+            title: AppLocalizations.of(context)?.website ?? 'Website',
+            subtitle: AppConstants.website,
+            onTap: () => _launchUrl('https://${AppConstants.website}'),
+          ),
+          _buildModernListItem(
+            context,
+            icon: Icons.shield_outlined,
+            title: AppLocalizations.of(context)?.privacyPolicy ?? 'Privacy Policy',
+            onTap: () => _launchUrl(AppConstants.privacyPolicyUrl),
+          ),
+          _buildModernListItem(
+            context,
+            icon: Icons.description_outlined,
+            title: AppLocalizations.of(context)?.termsOfService ?? 'Terms of Service',
+            onTap: () => _launchUrl(AppConstants.termsOfServiceUrl),
+            isLast: true,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildCompactListItem(
+  Widget _buildModernListItem(
     BuildContext context, {
     required IconData icon,
     required String title,
     String? subtitle,
     VoidCallback? onTap,
-    bool showTrailing = false,
     bool isLast = false,
   }) {
     final theme = Theme.of(context);
-    
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
-          margin: EdgeInsets.only(bottom: isLast ? 0 : 8),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          decoration: BoxDecoration(
+            border: isLast
+                ? null
+                : Border(
+                    bottom: BorderSide(
+                      color: theme.colorScheme.outline.withValues(alpha: 0.08),
+                      width: 1,
+                    ),
+                  ),
+          ),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      theme.colorScheme.primary.withValues(alpha: 0.15),
+                      theme.colorScheme.primary.withValues(alpha: 0.08),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   icon,
@@ -402,7 +626,7 @@ class SettingsPage extends StatelessWidget {
                   color: theme.colorScheme.primary,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,18 +644,25 @@ class SettingsPage extends StatelessWidget {
                       Text(
                         subtitle,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                         ),
                       ),
                     ],
                   ],
                 ),
               ),
-              if (showTrailing && onTap != null)
-                Icon(
-                  Icons.chevron_right,
-                  size: 20,
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              if (onTap != null)
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                  ),
                 ),
             ],
           ),
@@ -441,53 +672,230 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showInstructorDialog(BuildContext context) {
-    showDialog(
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.aboutJohnSaxxon ?? 'About John Saxxon'),
-        content: Text(
-          AppLocalizations.of(context)?.johnSaxxonBio ?? 
-          'John Saxxon is a certified Tai Chi instructor with over 20 years of experience. '
-          'He has trained thousands of students worldwide in the art of Tai Chi and meditation.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)?.close ?? 'Close'),
+      backgroundColor: Colors.transparent,
+      builder: (context) => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: isDark
+                    ? [
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.08),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.98),
+                        Colors.white.withValues(alpha: 0.95),
+                      ],
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        theme.colorScheme.primary.withValues(alpha: 0.2),
+                        theme.colorScheme.primary.withValues(alpha: 0.1),
+                      ],
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.person_rounded,
+                    size: 40,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  AppLocalizations.of(context)?.johnSaxxon ?? 'John Saxxon',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'Certified Tai Chi Instructor',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  AppLocalizations.of(context)?.johnSaxxonBio ??
+                      'John Saxxon is a certified Tai Chi instructor with over 20 years of experience. '
+                          'He has trained thousands of students worldwide in the art of Tai Chi and meditation.',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 24),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
 
   void _showRatingDialog(BuildContext context) {
-    showDialog(
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.rateOurApp ?? 'Rate Our App'),
-        content: Text(
-          AppLocalizations.of(context)?.rateAppMessage ?? 
-          'If you enjoy using our Tai Chi app, please take a moment to rate it. '
-          'Your feedback helps us improve the app for everyone.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)?.later ?? 'Later'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // In a real app, this would open the app store
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(AppLocalizations.of(context)?.thankYouRating ?? 'Thank you! Opening app store...'),
+      backgroundColor: Colors.transparent,
+      builder: (context) => ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: isDark
+                    ? [
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.08),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.98),
+                        Colors.white.withValues(alpha: 0.95),
+                      ],
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              );
-            },
-            child: Text(AppLocalizations.of(context)?.rateNow ?? 'Rate Now'),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    5,
+                    (index) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Icon(
+                        Icons.star_rounded,
+                        size: 32,
+                        color: AppColors.goldenTan,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  AppLocalizations.of(context)?.rateOurApp ?? 'Enjoying the App?',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  AppLocalizations.of(context)?.rateAppMessage ??
+                      'Your feedback helps us improve the app for everyone. Please take a moment to rate us!',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          side: BorderSide(
+                            color: theme.colorScheme.outline.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Text(AppLocalizations.of(context)?.later ?? 'Later'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)?.thankYouRating ?? 'Thank you! Opening app store...'),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          );
+                        },
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: Text(AppLocalizations.of(context)?.rateNow ?? 'Rate Now'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -512,101 +920,129 @@ class SettingsPage extends StatelessWidget {
 
     return BlocBuilder<PremiumBloc, PremiumState>(
       builder: (context, premiumState) {
-        // Check premium status from singleton service - SINGLE SOURCE OF TRUTH
         final isPremium = PremiumService().isPremium;
 
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isPremium
-                  ? [
-                      AppColors.accentSage.withValues(alpha: isDark ? 0.3 : 0.15),
-                      AppColors.accentSage.withValues(alpha: isDark ? 0.15 : 0.05),
-                    ]
-                  : [
-                      AppColors.goldenTan.withValues(alpha: isDark ? 0.3 : 0.2),
-                      AppColors.goldenTanLight.withValues(alpha: isDark ? 0.15 : 0.1),
-                    ],
-            ),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: isPremium
-                  ? AppColors.accentSage.withValues(alpha: 0.3)
-                  : AppColors.goldenTan.withValues(alpha: 0.4),
-              width: 1,
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                // Check premium status and navigate to correct page
-                final isPremiumUser = PremiumService().isPremium;
-                if (isPremiumUser) {
-                  // User is premium - show thank you page
-                  Navigator.of(context).pushNamed('/premium-unlocked');
-                } else {
-                  // User is NOT premium - show purchase page
-                  Navigator.of(context).pushNamed('/premium');
-                }
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: isPremium
-                            ? AppColors.accentSage
-                            : AppColors.goldenTan,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        isPremium ? Icons.workspace_premium : Icons.diamond,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            isPremium
-                                ? (AppLocalizations.of(context)?.premiumStatusTitle ?? 'Premium Member')
-                                : (AppLocalizations.of(context)?.premiumTitle ?? 'Unlock Premium'),
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: isPremium
-                                  ? (isDark ? AppColors.accentSage : AppColors.warmBrownDark)
-                                  : (isDark ? AppColors.goldenTanLight : AppColors.warmBrownDark),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            isPremium
-                                ? (AppLocalizations.of(context)?.premiumStatusSubtitle ?? 'You have unlimited access to all features')
-                                : (AppLocalizations.of(context)?.premiumSubtitle ?? 'Get unlimited access to all features'),
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: isPremium
-                                  ? (isDark ? AppColors.accentSage.withValues(alpha: 0.8) : AppColors.warmBrown)
-                                  : (isDark ? AppColors.goldenTan.withValues(alpha: 0.9) : AppColors.warmBrown.withValues(alpha: 0.8)),
-                            ),
-                          ),
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: isPremium
+                      ? [
+                          AppColors.accentSage.withValues(alpha: isDark ? 0.35 : 0.2),
+                          AppColors.accentSage.withValues(alpha: isDark ? 0.2 : 0.1),
+                        ]
+                      : [
+                          AppColors.goldenTan.withValues(alpha: isDark ? 0.4 : 0.25),
+                          AppColors.goldenTanLight.withValues(alpha: isDark ? 0.2 : 0.15),
                         ],
-                      ),
+                ),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: isPremium
+                      ? AppColors.accentSage.withValues(alpha: 0.4)
+                      : AppColors.goldenTan.withValues(alpha: 0.5),
+                  width: 1.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isPremium ? AppColors.accentSage : AppColors.goldenTan).withValues(alpha: 0.2),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    final isPremiumUser = PremiumService().isPremium;
+                    if (isPremiumUser) {
+                      Navigator.of(context).pushNamed('/premium-unlocked');
+                    } else {
+                      Navigator.of(context).pushNamed('/premium');
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(24),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: isPremium
+                                  ? [AppColors.accentSage, AppColors.accentSage.withValues(alpha: 0.8)]
+                                  : [AppColors.goldenTan, AppColors.goldenTanDark],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: (isPremium ? AppColors.accentSage : AppColors.goldenTan).withValues(alpha: 0.4),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            isPremium ? Icons.workspace_premium_rounded : Icons.diamond_rounded,
+                            color: Colors.white,
+                            size: 26,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                isPremium
+                                    ? (AppLocalizations.of(context)?.premiumStatusTitle ?? 'Premium Member')
+                                    : (AppLocalizations.of(context)?.premiumTitle ?? 'Unlock Premium'),
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: -0.3,
+                                  color: isPremium
+                                      ? (isDark ? AppColors.accentSage : AppColors.warmBrownDark)
+                                      : (isDark ? AppColors.goldenTanLight : AppColors.warmBrownDark),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                isPremium
+                                    ? (AppLocalizations.of(context)?.premiumStatusSubtitle ?? 'Unlimited access to all features')
+                                    : (AppLocalizations.of(context)?.premiumSubtitle ?? 'Get unlimited access'),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: isPremium
+                                      ? (isDark ? AppColors.accentSage.withValues(alpha: 0.9) : AppColors.warmBrown)
+                                      : (isDark ? AppColors.goldenTan : AppColors.warmBrown.withValues(alpha: 0.8)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: (isPremium ? AppColors.accentSage : AppColors.goldenTan).withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            isPremium ? Icons.check_circle_rounded : Icons.arrow_forward_ios_rounded,
+                            size: 18,
+                            color: isPremium ? AppColors.accentSage : AppColors.goldenTan,
+                          ),
+                        ),
+                      ],
                     ),
-                    Icon(
-                      isPremium ? Icons.check_circle : Icons.arrow_forward_ios,
-                      size: 20,
-                      color: isPremium ? AppColors.accentSage : AppColors.goldenTan,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -615,5 +1051,4 @@ class SettingsPage extends StatelessWidget {
       },
     );
   }
-
 }
