@@ -53,6 +53,9 @@ dependencies:
   # Ads
   google_mobile_ads: ^7.0.0
 
+  # Fonts
+  google_fonts: ^6.2.1
+
   # UI
   cached_network_image: ^3.3.0
   shimmer: ^3.0.0
