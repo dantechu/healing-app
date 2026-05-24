@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -142,6 +143,7 @@ class _PremiumPageState extends State<PremiumPage> {
 
 
   Widget _buildCompactFeatures(ThemeData theme) {
+    final isDark = theme.brightness == Brightness.dark;
     final features = [
       {'icon': Icons.download_for_offline_outlined, 'title': AppLocalizations.of(context)?.premiumFeature1 ?? 'Offline downloads'},
       {'icon': Icons.block_outlined, 'title': AppLocalizations.of(context)?.premiumFeature2 ?? 'No advertisements'},
@@ -153,44 +155,57 @@ class _PremiumPageState extends State<PremiumPage> {
       children: features.map((feature) {
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainer,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: theme.colorScheme.outline.withValues(alpha: 0.15),
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(7),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+              child: Container(
+                padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  feature['icon'] as IconData,
-                  color: theme.colorScheme.primary,
-                  size: 18,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  feature['title'] as String,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.white.withValues(alpha: 0.8),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : theme.colorScheme.outline.withValues(alpha: 0.08),
+                    width: 1,
                   ),
                 ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        feature['icon'] as IconData,
+                        color: theme.colorScheme.primary,
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Text(
+                        feature['title'] as String,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.check_circle_rounded,
+                      color: theme.colorScheme.primary,
+                      size: 18,
+                    ),
+                  ],
+                ),
               ),
-              Icon(
-                Icons.check_circle_outline,
-                color: theme.colorScheme.primary,
-                size: 18,
-              ),
-            ],
+            ),
           ),
         );
       }).toList(),
@@ -206,46 +221,67 @@ class _PremiumPageState extends State<PremiumPage> {
       displayPrice = state.productPrice!;
     }
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.12),
-        border: Border.all(
-          color: theme.colorScheme.primary.withValues(alpha: 0.3),
-          width: 1.5,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.primary.withValues(alpha: 0.15),
+                theme.colorScheme.primary.withValues(alpha: 0.08),
+              ],
+            ),
+            border: Border.all(
+              color: theme.colorScheme.primary.withValues(alpha: 0.25),
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  'Lifetime Access',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: 13,
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                displayPrice,
+                style: theme.textTheme.displaySmall?.copyWith(
+                  fontSize: 40,
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -1,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'One-time payment',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontSize: 13,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Text(
-            'Lifetime Access',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontSize: 15,
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            displayPrice,
-            style: theme.textTheme.displaySmall?.copyWith(
-              fontSize: 36,
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'One-time payment',
-            style: theme.textTheme.bodySmall?.copyWith(
-              fontSize: 12,
-              color: theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -255,6 +291,7 @@ class _PremiumPageState extends State<PremiumPage> {
       children: [
         SizedBox(
           width: double.infinity,
+          height: 52,
           child: FilledButton.icon(
             onPressed: state is PremiumLoading
                 ? null
@@ -265,12 +302,12 @@ class _PremiumPageState extends State<PremiumPage> {
               backgroundColor: theme.colorScheme.primary,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(14),
               ),
             ),
             icon: state is PremiumLoading
                 ? const SizedBox.shrink()
-                : const Icon(Icons.shopping_cart_outlined, size: 18),
+                : const Icon(Icons.diamond_rounded, size: 20),
             label: state is PremiumLoading
                 ? const SizedBox(
                     height: 20,
@@ -283,21 +320,21 @@ class _PremiumPageState extends State<PremiumPage> {
                 : Text(
                     AppLocalizations.of(context)?.purchase ?? 'Purchase Premium',
                     style: const TextStyle(
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         TextButton.icon(
           onPressed: () {
             context.read<PremiumBloc>().add(const RestorePremiumRequested());
           },
           icon: Icon(
-            Icons.restore_outlined,
-            size: 16,
+            Icons.restore_rounded,
+            size: 18,
             color: theme.colorScheme.primary,
           ),
           label: Text(

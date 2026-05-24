@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:math' as math;
@@ -414,39 +415,48 @@ class _MusicPlayerPageState extends State<MusicPlayerPage>
 
   Widget _buildControlButtons(ThemeData theme) {
     final currentTrack = _getTracks(context)[_currentTrackIndex];
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha:0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+    final isDark = theme.brightness == Brightness.dark;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : Colors.white.withValues(alpha: 0.85),
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : theme.colorScheme.outline.withValues(alpha: 0.1),
+              width: 1,
+            ),
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildControlButton(
-            icon: Icons.skip_previous_rounded,
-            onPressed: _previousTrack,
-            size: 36,
-            color: theme.colorScheme.onSurfaceVariant,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildControlButton(
+                icon: Icons.skip_previous_rounded,
+                onPressed: _previousTrack,
+                size: 34,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 20),
+              _buildPlayPauseButton(currentTrack.color),
+              const SizedBox(width: 20),
+              _buildControlButton(
+                icon: Icons.skip_next_rounded,
+                onPressed: _nextTrack,
+                size: 34,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ],
           ),
-          const SizedBox(width: 16),
-          _buildPlayPauseButton(currentTrack.color),
-          const SizedBox(width: 16),
-          _buildControlButton(
-            icon: Icons.skip_next_rounded,
-            onPressed: _nextTrack,
-            size: 36,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
@@ -20,17 +21,17 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.goldenTan.withOpacity(0.15),
-      AppColors.goldenTan.withOpacity(0.0),
+      AppColors.goldenTan.withValues(alpha: 0.12),
+      AppColors.goldenTan.withValues(alpha: 0.0),
     ],
-    stops: const [0.0, 0.4],
+    stops: const [0.0, 0.5],
   );
 
   final _breathingGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      AppColors.warmBrown.withOpacity(0.12),
+      AppColors.warmBrown.withValues(alpha: 0.1),
       Colors.transparent,
     ],
     stops: const [0.0, 0.5],
@@ -69,8 +70,10 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
       body: Container(
         decoration: BoxDecoration(
           gradient: _getCurrentGradient(),
@@ -78,32 +81,82 @@ class _PracticePageState extends State<PracticePage> with SingleTickerProviderSt
         child: SafeArea(
           child: Column(
             children: [
-              Material(
-                color: Colors.transparent,
-                elevation: 0,
-                child: TabBar(
-                  controller: _tabController,
-                  indicatorColor: theme.colorScheme.primary,
-                  labelColor: theme.colorScheme.primary,
-                  unselectedLabelColor: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                  labelStyle: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                  ),
-                  tabs: [
-                    Tab(
-                      icon: const Icon(Icons.music_note),
-                      text: AppLocalizations.of(context)?.music ?? 'Music',
+              // Modern glassmorphic tab bar
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.06)
+                            : Colors.white.withValues(alpha: 0.8),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.08)
+                              : theme.colorScheme.outline.withValues(alpha: 0.08),
+                          width: 1,
+                        ),
+                      ),
+                      child: TabBar(
+                        controller: _tabController,
+                        indicator: BoxDecoration(
+                          color: theme.colorScheme.primary.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        dividerColor: Colors.transparent,
+                        labelColor: theme.colorScheme.primary,
+                        unselectedLabelColor: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        unselectedLabelStyle: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                        tabs: [
+                          Tab(
+                            height: 52,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  _currentTabIndex == 0
+                                      ? Icons.music_note_rounded
+                                      : Icons.music_note_outlined,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(AppLocalizations.of(context)?.music ?? 'Music'),
+                              ],
+                            ),
+                          ),
+                          Tab(
+                            height: 52,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  _currentTabIndex == 1
+                                      ? Icons.air_rounded
+                                      : Icons.air_outlined,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(AppLocalizations.of(context)?.breathing ?? 'Breathing'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Tab(
-                      icon: const Icon(Icons.air),
-                      text: AppLocalizations.of(context)?.breathing ?? 'Breathing',
-                    ),
-                  ],
+                  ),
                 ),
               ),
               Expanded(

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import '../../../../core/services/premium_service.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
@@ -259,6 +260,8 @@ class _BreathingSetupScreenState extends State<BreathingSetupScreen>
   }
 
   Widget _buildDurationSelector(ThemeData theme, BuildContext context) {
+    final isDark = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -287,66 +290,64 @@ class _BreathingSetupScreenState extends State<BreathingSetupScreen>
 
             return GestureDetector(
               onTap: () => widget.onDurationChanged(duration),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  gradient: isSelected
-                      ? LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            _accentColor,
-                            _accentColor.withValues(alpha: 0.8),
-                          ],
-                        )
-                      : null,
-                  color: isSelected ? null : theme.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: isSelected
-                        ? Colors.transparent
-                        : theme.colorScheme.outline.withValues(alpha: 0.2),
-                    width: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    decoration: BoxDecoration(
+                      gradient: isSelected
+                          ? LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                _accentColor,
+                                _accentColor.withValues(alpha: 0.85),
+                              ],
+                            )
+                          : null,
+                      color: isSelected
+                          ? null
+                          : isDark
+                              ? Colors.white.withValues(alpha: 0.06)
+                              : Colors.white.withValues(alpha: 0.8),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isSelected
+                            ? Colors.transparent
+                            : isDark
+                                ? Colors.white.withValues(alpha: 0.08)
+                                : theme.colorScheme.outline.withValues(alpha: 0.08),
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '$minutes',
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 26,
+                            color: isSelected
+                                ? Colors.white
+                                : theme.colorScheme.onSurface,
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)?.min ?? 'min',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            color: isSelected
+                                ? Colors.white.withValues(alpha: 0.9)
+                                : theme.colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  boxShadow: [
-                    if (isSelected)
-                      BoxShadow(
-                        color: _accentColor.withValues(alpha: 0.4),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      )
-                    else
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '$minutes',
-                      style: theme.textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                        color: isSelected
-                            ? Colors.white
-                            : theme.colorScheme.onSurface,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)?.min ?? 'min',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 12,
-                        color: isSelected
-                            ? Colors.white.withValues(alpha: 0.9)
-                            : theme.colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             );
