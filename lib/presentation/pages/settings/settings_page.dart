@@ -65,51 +65,106 @@ class SettingsPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
-                return Column(
-                  children: [
-                    RadioListTile<AppThemeMode>(
-                      title: Text(AppLocalizations.of(context)?.light ?? 'Light'),
-                      subtitle: Text(AppLocalizations.of(context)?.lightThemeDescription ?? 'Always use light theme'),
-                      value: AppThemeMode.light,
-                      groupValue: state.themeMode,
-                      onChanged: (value) {
-                        if (value != null) {
-                          context.read<ThemeBloc>().add(ChangeTheme(value));
-                        }
-                      },
-                    ),
-                    RadioListTile<AppThemeMode>(
-                      title: Text(AppLocalizations.of(context)?.dark ?? 'Dark'),
-                      subtitle: Text(AppLocalizations.of(context)?.darkThemeDescription ?? 'Always use dark theme'),
-                      value: AppThemeMode.dark,
-                      groupValue: state.themeMode,
-                      onChanged: (value) {
-                        if (value != null) {
-                          context.read<ThemeBloc>().add(ChangeTheme(value));
-                        }
-                      },
-                    ),
-                    RadioListTile<AppThemeMode>(
-                      title: Text(AppLocalizations.of(context)?.system ?? 'System'),
-                      subtitle: Text(AppLocalizations.of(context)?.systemThemeDescription ?? 'Follow system setting'),
-                      value: AppThemeMode.system,
-                      groupValue: state.themeMode,
-                      onChanged: (value) {
-                        if (value != null) {
-                          context.read<ThemeBloc>().add(ChangeTheme(value));
-                        }
-                      },
-                    ),
-                  ],
+                String currentThemeName;
+                switch (state.themeMode) {
+                  case AppThemeMode.light:
+                    currentThemeName = AppLocalizations.of(context)?.light ?? 'Light';
+                    break;
+                  case AppThemeMode.dark:
+                    currentThemeName = AppLocalizations.of(context)?.dark ?? 'Dark';
+                    break;
+                  case AppThemeMode.system:
+                    currentThemeName = AppLocalizations.of(context)?.system ?? 'System';
+                    break;
+                }
+                return _buildCompactListItem(
+                  context,
+                  icon: Icons.brightness_6,
+                  title: AppLocalizations.of(context)?.theme ?? 'Theme',
+                  subtitle: currentThemeName,
+                  onTap: () => _showThemeDialog(context, state.themeMode),
+                  showTrailing: true,
+                  isLast: true,
                 );
               },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showThemeDialog(BuildContext context, AppThemeMode currentMode) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(AppLocalizations.of(context)?.theme ?? 'Theme'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildThemeOption(
+              context,
+              dialogContext,
+              AppThemeMode.light,
+              currentMode,
+              Icons.light_mode,
+              AppLocalizations.of(context)?.light ?? 'Light',
+            ),
+            _buildThemeOption(
+              context,
+              dialogContext,
+              AppThemeMode.dark,
+              currentMode,
+              Icons.dark_mode,
+              AppLocalizations.of(context)?.dark ?? 'Dark',
+            ),
+            _buildThemeOption(
+              context,
+              dialogContext,
+              AppThemeMode.system,
+              currentMode,
+              Icons.settings_suggest,
+              AppLocalizations.of(context)?.system ?? 'System',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildThemeOption(
+    BuildContext context,
+    BuildContext dialogContext,
+    AppThemeMode mode,
+    AppThemeMode currentMode,
+    IconData icon,
+    String label,
+  ) {
+    final theme = Theme.of(context);
+    final isSelected = mode == currentMode;
+
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+        ),
+      ),
+      trailing: isSelected
+          ? Icon(Icons.check, color: theme.colorScheme.primary)
+          : null,
+      onTap: () {
+        context.read<ThemeBloc>().add(ChangeTheme(mode));
+        Navigator.of(dialogContext).pop();
+      },
     );
   }
 
@@ -136,35 +191,68 @@ class SettingsPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             BlocBuilder<LocaleBloc, LocaleState>(
               builder: (context, state) {
-                return Column(
-                  children: AppConstants.supportedLocales.map((language) {
-                    final locale = Locale(language['code'] as String);
-                    final isSelected = state.locale.languageCode == locale.languageCode;
-                    
-                    return ListTile(
-                      leading: Text(
-                        language['flag'] as String,
-                        style: const TextStyle(fontSize: 24),
-                      ),
-                      title: Text(language['name'] as String),
-                      trailing: isSelected 
-                          ? Icon(
-                              Icons.check,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          : null,
-                      onTap: () {
-                        context.read<LocaleBloc>().add(ChangeLocale(locale));
-                      },
-                    );
-                  }).toList(),
+                // Find current language name
+                String currentLanguageName = 'English';
+                for (final language in AppConstants.supportedLocales) {
+                  if (language['code'] == state.locale.languageCode) {
+                    currentLanguageName = language['name'] as String;
+                    break;
+                  }
+                }
+                return _buildCompactListItem(
+                  context,
+                  icon: Icons.translate,
+                  title: AppLocalizations.of(context)?.language ?? 'Language',
+                  subtitle: currentLanguageName,
+                  onTap: () => _showLanguageDialog(context, state.locale),
+                  showTrailing: true,
+                  isLast: true,
                 );
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context, Locale currentLocale) {
+    final theme = Theme.of(context);
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(AppLocalizations.of(context)?.language ?? 'Language'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: AppConstants.supportedLocales.map((language) {
+            final locale = Locale(language['code'] as String);
+            final isSelected = currentLocale.languageCode == locale.languageCode;
+
+            return ListTile(
+              leading: Text(
+                language['flag'] as String,
+                style: const TextStyle(fontSize: 24),
+              ),
+              title: Text(
+                language['name'] as String,
+                style: TextStyle(
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+                ),
+              ),
+              trailing: isSelected
+                  ? Icon(Icons.check, color: theme.colorScheme.primary)
+                  : null,
+              onTap: () {
+                context.read<LocaleBloc>().add(ChangeLocale(locale));
+                Navigator.of(dialogContext).pop();
+              },
+            );
+          }).toList(),
         ),
       ),
     );
@@ -420,100 +508,106 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildPremiumTile(BuildContext context) {
     final theme = Theme.of(context);
-    // Use theme-consistent sage green for premium status
-    const premiumColor = AppColors.success;
+    final isDark = theme.brightness == Brightness.dark;
 
     return BlocBuilder<PremiumBloc, PremiumState>(
       builder: (context, premiumState) {
         // Check premium status from singleton service - SINGLE SOURCE OF TRUTH
         final isPremium = PremiumService().isPremium;
 
-        return Card(
-          elevation: 8,
-          shadowColor: isPremium
-              ? premiumColor.withValues(alpha: 0.2)
-              : theme.colorScheme.primary.withValues(alpha: 0.2),
-          child: InkWell(
-            onTap: () {
-              // Check premium status and navigate to correct page
-              final isPremiumUser = PremiumService().isPremium;
-              if (isPremiumUser) {
-                // User is premium - show thank you page
-                Navigator.of(context).pushNamed('/premium-unlocked');
-              } else {
-                // User is NOT premium - show purchase page
-                Navigator.of(context).pushNamed('/premium');
-              }
-            },
-            borderRadius: BorderRadius.circular(12),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: isPremium
-                    ? premiumColor.withValues(alpha: 0.12)
-                    : theme.colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: isPremium
-                      ? premiumColor.withValues(alpha: 0.3)
-                      : theme.colorScheme.primary.withValues(alpha: 0.3),
-                  width: 1,
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isPremium
+                  ? [
+                      AppColors.accentSage.withValues(alpha: isDark ? 0.3 : 0.15),
+                      AppColors.accentSage.withValues(alpha: isDark ? 0.15 : 0.05),
+                    ]
+                  : [
+                      AppColors.goldenTan.withValues(alpha: isDark ? 0.3 : 0.2),
+                      AppColors.goldenTanLight.withValues(alpha: isDark ? 0.15 : 0.1),
+                    ],
+            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isPremium
+                  ? AppColors.accentSage.withValues(alpha: 0.3)
+                  : AppColors.goldenTan.withValues(alpha: 0.4),
+              width: 1,
+            ),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                // Check premium status and navigate to correct page
+                final isPremiumUser = PremiumService().isPremium;
+                if (isPremiumUser) {
+                  // User is premium - show thank you page
+                  Navigator.of(context).pushNamed('/premium-unlocked');
+                } else {
+                  // User is NOT premium - show purchase page
+                  Navigator.of(context).pushNamed('/premium');
+                }
+              },
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: isPremium
+                            ? AppColors.accentSage
+                            : AppColors.goldenTan,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        isPremium ? Icons.workspace_premium : Icons.diamond,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isPremium
+                                ? (AppLocalizations.of(context)?.premiumStatusTitle ?? 'Premium Member')
+                                : (AppLocalizations.of(context)?.premiumTitle ?? 'Unlock Premium'),
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: isPremium
+                                  ? (isDark ? AppColors.accentSage : AppColors.warmBrownDark)
+                                  : (isDark ? AppColors.goldenTanLight : AppColors.warmBrownDark),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            isPremium
+                                ? (AppLocalizations.of(context)?.premiumStatusSubtitle ?? 'You have unlimited access to all features')
+                                : (AppLocalizations.of(context)?.premiumSubtitle ?? 'Get unlimited access to all features'),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: isPremium
+                                  ? (isDark ? AppColors.accentSage.withValues(alpha: 0.8) : AppColors.warmBrown)
+                                  : (isDark ? AppColors.goldenTan.withValues(alpha: 0.9) : AppColors.warmBrown.withValues(alpha: 0.8)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      isPremium ? Icons.check_circle : Icons.arrow_forward_ios,
+                      size: 20,
+                      color: isPremium ? AppColors.accentSage : AppColors.goldenTan,
+                    ),
+                  ],
                 ),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isPremium ? premiumColor : theme.colorScheme.primary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      isPremium ? Icons.workspace_premium : Icons.diamond,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          isPremium
-                              ? (AppLocalizations.of(context)?.premiumStatusTitle ?? 'Premium Member')
-                              : (AppLocalizations.of(context)?.premiumTitle ?? 'Unlock Premium'),
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontSize: 17,
-                            color: isPremium
-                                ? AppColors.warmBrownDark
-                                : theme.colorScheme.onPrimaryContainer,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          isPremium
-                              ? (AppLocalizations.of(context)?.premiumStatusSubtitle ?? 'You have unlimited access to all features')
-                              : (AppLocalizations.of(context)?.premiumSubtitle ?? 'Get unlimited access to all features'),
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            fontSize: 13,
-                            color: isPremium
-                                ? AppColors.warmBrown.withValues(alpha: 0.8)
-                                : theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Icon(
-                    isPremium ? Icons.check_circle : Icons.arrow_forward_ios,
-                    color: isPremium
-                        ? premiumColor
-                        : theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                    size: 18,
-                  ),
-                ],
               ),
             ),
           ),
