@@ -3,28 +3,29 @@ import 'app_colors.dart';
 
 class AppTheme {
   // ═══════════════════════════════════════════════════════════════════════════
-  // LIGHT THEME - Deep Navy, Calm, Sophisticated
+  // LIGHT THEME - Warm Earth Tones, Grounding, Natural Healing
+  // Inspired by the yin-yang app icon: chocolate brown, golden tan, cream
   // ═══════════════════════════════════════════════════════════════════════════
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
 
-    // Color Scheme - Deep Navy primary with teal and gold accents
+    // Color Scheme - Warm Brown primary with golden tan and cream accents
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.deepNavy,
+      seedColor: AppColors.warmBrown,
       brightness: Brightness.light,
-      primary: AppColors.deepNavy,
+      primary: AppColors.warmBrown,
       onPrimary: Colors.white,
-      primaryContainer: AppColors.deepNavyLight.withOpacity(0.2),
-      onPrimaryContainer: AppColors.deepNavyDark,
-      secondary: AppColors.softTeal,
+      primaryContainer: AppColors.warmBrownLight.withOpacity(0.2),
+      onPrimaryContainer: AppColors.warmBrownDark,
+      secondary: AppColors.goldenTan,
       onSecondary: Colors.white,
-      secondaryContainer: AppColors.softTealLight.withOpacity(0.3),
-      onSecondaryContainer: AppColors.softTealDark,
-      tertiary: AppColors.warmGold,
+      secondaryContainer: AppColors.goldenTanLight.withOpacity(0.3),
+      onSecondaryContainer: AppColors.goldenTanDark,
+      tertiary: AppColors.softCream,
       onTertiary: AppColors.textPrimary,
-      tertiaryContainer: AppColors.warmGoldLight.withOpacity(0.3),
-      onTertiaryContainer: AppColors.warmGoldDark,
+      tertiaryContainer: AppColors.softCreamLight.withOpacity(0.3),
+      onTertiaryContainer: AppColors.softCreamDark,
       surface: AppColors.backgroundLight,
       onSurface: AppColors.textPrimary,
       surfaceContainerHighest: Colors.white,
@@ -140,10 +141,10 @@ class AppTheme {
       ),
     ),
 
-    // Card theme - Soft, organic corners
+    // Card theme - Soft, organic corners with warm shadows
     cardTheme: CardThemeData(
       elevation: AppColors.elevationCard,
-      shadowColor: AppColors.deepNavy.withOpacity(0.08),
+      shadowColor: AppColors.warmBrown.withOpacity(0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusCard),
       ),
@@ -171,16 +172,16 @@ class AppTheme {
       ),
     ),
 
-    // Button themes - Soft, rounded
+    // Button themes - Soft, rounded with warm tones
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(120, 52),
         elevation: AppColors.elevationButton,
-        shadowColor: AppColors.deepNavy.withOpacity(0.2),
+        shadowColor: AppColors.warmBrown.withOpacity(0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        backgroundColor: AppColors.deepNavy,
+        backgroundColor: AppColors.warmBrown,
         foregroundColor: Colors.white,
         textStyle: TextStyle(
           fontSize: 15,
@@ -196,8 +197,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        side: BorderSide(color: AppColors.deepNavy, width: 1.5),
-        foregroundColor: AppColors.deepNavy,
+        side: BorderSide(color: AppColors.warmBrown, width: 1.5),
+        foregroundColor: AppColors.warmBrown,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -212,7 +213,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        foregroundColor: AppColors.deepNavy,
+        foregroundColor: AppColors.warmBrown,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -221,9 +222,9 @@ class AppTheme {
       ),
     ),
 
-    // Floating Action Button - Soft, prominent
+    // Floating Action Button - Soft, prominent with warm brown
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.deepNavy,
+      backgroundColor: AppColors.warmBrown,
       foregroundColor: Colors.white,
       elevation: AppColors.elevationFab,
       shape: RoundedRectangleBorder(
@@ -231,21 +232,21 @@ class AppTheme {
       ),
     ),
 
-    // Bottom navigation - Clean, minimal
+    // Bottom navigation - Clean, minimal with warm accents
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AppColors.deepNavy.withOpacity(0.12),
+      indicatorColor: AppColors.goldenTan.withOpacity(0.25),
       height: 68,
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       elevation: AppColors.elevationBottomNav,
-      shadowColor: AppColors.deepNavy.withOpacity(0.1),
+      shadowColor: AppColors.warmBrown.withOpacity(0.1),
       labelTextStyle: WidgetStateProperty.resolveWith<TextStyle?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
             return TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: AppColors.deepNavy,
+              color: AppColors.warmBrown,
             );
           }
           return TextStyle(
@@ -259,7 +260,7 @@ class AppTheme {
         (states) {
           if (states.contains(WidgetState.selected)) {
             return IconThemeData(
-              color: AppColors.deepNavy,
+              color: AppColors.warmBrown,
               size: AppColors.iconMedium,
             );
           }
@@ -271,7 +272,7 @@ class AppTheme {
       ),
     ),
 
-    // Input decoration - Soft borders
+    // Input decoration - Soft warm borders
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
@@ -285,7 +286,7 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
-        borderSide: BorderSide(color: AppColors.deepNavy, width: 2),
+        borderSide: BorderSide(color: AppColors.warmBrown, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
@@ -298,16 +299,16 @@ class AppTheme {
       hintStyle: TextStyle(color: AppColors.textTertiary),
     ),
 
-    // Chip theme - Rounded, organic
+    // Chip theme - Rounded, organic with warm selection
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.backgroundLightAlt,
-      selectedColor: AppColors.deepNavy.withOpacity(0.12),
+      selectedColor: AppColors.goldenTan.withOpacity(0.25),
       labelStyle: TextStyle(
         color: AppColors.textPrimary,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
-      secondaryLabelStyle: TextStyle(color: AppColors.deepNavy),
+      secondaryLabelStyle: TextStyle(color: AppColors.warmBrown),
       brightness: Brightness.light,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusChip),
@@ -319,19 +320,19 @@ class AppTheme {
       ),
     ),
 
-    // Progress indicator
+    // Progress indicator - Warm brown
     progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: AppColors.deepNavy,
-      linearTrackColor: AppColors.deepNavy.withOpacity(0.12),
-      circularTrackColor: AppColors.deepNavy.withOpacity(0.12),
+      color: AppColors.warmBrown,
+      linearTrackColor: AppColors.warmBrown.withOpacity(0.12),
+      circularTrackColor: AppColors.warmBrown.withOpacity(0.12),
     ),
 
-    // Slider theme - Smooth, calming
+    // Slider theme - Smooth, calming with warm colors
     sliderTheme: SliderThemeData(
-      activeTrackColor: AppColors.deepNavy,
-      inactiveTrackColor: AppColors.deepNavy.withOpacity(0.2),
-      thumbColor: AppColors.deepNavy,
-      overlayColor: AppColors.deepNavy.withOpacity(0.1),
+      activeTrackColor: AppColors.warmBrown,
+      inactiveTrackColor: AppColors.warmBrown.withOpacity(0.2),
+      thumbColor: AppColors.warmBrown,
+      overlayColor: AppColors.warmBrown.withOpacity(0.1),
       trackHeight: 4,
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
     ),
@@ -373,12 +374,12 @@ class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
 
-    // Switch theme
+    // Switch theme - Warm brown toggle
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavy;
+            return AppColors.warmBrown;
           }
           return AppColors.textTertiary;
         },
@@ -386,19 +387,19 @@ class AppTheme {
       trackColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavy.withOpacity(0.4);
+            return AppColors.goldenTan.withOpacity(0.5);
           }
           return AppColors.dividerLight;
         },
       ),
     ),
 
-    // Checkbox theme
+    // Checkbox theme - Warm brown
     checkboxTheme: CheckboxThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavy;
+            return AppColors.warmBrown;
           }
           return Colors.transparent;
         },
@@ -409,12 +410,12 @@ class AppTheme {
       ),
     ),
 
-    // Radio theme
+    // Radio theme - Warm brown
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavy;
+            return AppColors.warmBrown;
           }
           return AppColors.textSecondary;
         },
@@ -438,36 +439,37 @@ class AppTheme {
       size: AppColors.iconMedium,
     ),
 
-    // Primary icon theme
+    // Primary icon theme - Warm brown
     primaryIconTheme: IconThemeData(
-      color: AppColors.deepNavy,
+      color: AppColors.warmBrown,
       size: AppColors.iconMedium,
     ),
   );
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // DARK THEME - Deep Midnight, Serene Night
+  // DARK THEME - Deep Warm Night, Cozy Grounding
+  // Warm earth tones adapted for dark mode visibility
   // ═══════════════════════════════════════════════════════════════════════════
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
 
-    // Color Scheme - Navy Light for dark mode visibility
+    // Color Scheme - Warm Brown Light for dark mode visibility
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.deepNavyLight,
+      seedColor: AppColors.warmBrownLight,
       brightness: Brightness.dark,
-      primary: AppColors.deepNavyLight,
+      primary: AppColors.goldenTan,
       onPrimary: AppColors.backgroundDark,
-      primaryContainer: AppColors.deepNavy.withOpacity(0.3),
-      onPrimaryContainer: AppColors.deepNavyLight,
-      secondary: AppColors.softTealLight,
+      primaryContainer: AppColors.warmBrown.withOpacity(0.3),
+      onPrimaryContainer: AppColors.goldenTanLight,
+      secondary: AppColors.goldenTanLight,
       onSecondary: AppColors.backgroundDark,
-      secondaryContainer: AppColors.softTeal.withOpacity(0.3),
-      onSecondaryContainer: AppColors.softTealLight,
-      tertiary: AppColors.warmGoldLight,
+      secondaryContainer: AppColors.goldenTan.withOpacity(0.3),
+      onSecondaryContainer: AppColors.goldenTanLight,
+      tertiary: AppColors.softCreamLight,
       onTertiary: AppColors.backgroundDark,
-      tertiaryContainer: AppColors.warmGold.withOpacity(0.3),
-      onTertiaryContainer: AppColors.warmGoldLight,
+      tertiaryContainer: AppColors.softCream.withOpacity(0.3),
+      onTertiaryContainer: AppColors.softCreamLight,
       surface: AppColors.surfaceDark,
       onSurface: AppColors.textPrimaryDark,
       surfaceContainerHighest: AppColors.surfaceDarkAlt,
@@ -614,17 +616,17 @@ class AppTheme {
       ),
     ),
 
-    // Button themes
+    // Button themes - Warm golden tan for visibility in dark mode
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(120, 52),
         elevation: AppColors.elevationButton,
-        shadowColor: AppColors.deepNavyLight.withOpacity(0.2),
+        shadowColor: AppColors.goldenTan.withOpacity(0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        backgroundColor: AppColors.deepNavyLight,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.goldenTan,
+        foregroundColor: AppColors.warmBrownDark,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -639,8 +641,8 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        side: BorderSide(color: AppColors.deepNavyLight, width: 1.5),
-        foregroundColor: AppColors.deepNavyLight,
+        side: BorderSide(color: AppColors.goldenTan, width: 1.5),
+        foregroundColor: AppColors.goldenTan,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -655,7 +657,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppColors.radiusButton),
         ),
-        foregroundColor: AppColors.deepNavyLight,
+        foregroundColor: AppColors.goldenTan,
         textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -664,19 +666,19 @@ class AppTheme {
       ),
     ),
 
-    // Floating Action Button
+    // Floating Action Button - Golden tan for visibility
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.deepNavyLight,
-      foregroundColor: Colors.white,
+      backgroundColor: AppColors.goldenTan,
+      foregroundColor: AppColors.warmBrownDark,
       elevation: AppColors.elevationFab,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusLarge),
       ),
     ),
 
-    // Bottom navigation
+    // Bottom navigation - Warm accents
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AppColors.deepNavyLight.withOpacity(0.2),
+      indicatorColor: AppColors.goldenTan.withOpacity(0.2),
       height: 68,
       backgroundColor: AppColors.surfaceDark,
       surfaceTintColor: Colors.transparent,
@@ -688,7 +690,7 @@ class AppTheme {
             return TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: AppColors.deepNavyLight,
+              color: AppColors.goldenTan,
             );
           }
           return TextStyle(
@@ -702,7 +704,7 @@ class AppTheme {
         (states) {
           if (states.contains(WidgetState.selected)) {
             return IconThemeData(
-              color: AppColors.deepNavyLight,
+              color: AppColors.goldenTan,
               size: AppColors.iconMedium,
             );
           }
@@ -714,7 +716,7 @@ class AppTheme {
       ),
     ),
 
-    // Input decoration
+    // Input decoration - Warm focus border
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.surfaceDarkAlt,
@@ -728,7 +730,7 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
-        borderSide: BorderSide(color: AppColors.deepNavyLight, width: 2),
+        borderSide: BorderSide(color: AppColors.goldenTan, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusButton),
@@ -741,16 +743,16 @@ class AppTheme {
       hintStyle: TextStyle(color: AppColors.textTertiaryDark),
     ),
 
-    // Chip theme
+    // Chip theme - Warm selection
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.surfaceDarkAlt,
-      selectedColor: AppColors.deepNavyLight.withOpacity(0.2),
+      selectedColor: AppColors.goldenTan.withOpacity(0.2),
       labelStyle: TextStyle(
         color: AppColors.textPrimaryDark,
         fontSize: 13,
         fontWeight: FontWeight.w400,
       ),
-      secondaryLabelStyle: TextStyle(color: AppColors.deepNavyLight),
+      secondaryLabelStyle: TextStyle(color: AppColors.goldenTan),
       brightness: Brightness.dark,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppColors.radiusChip),
@@ -762,19 +764,19 @@ class AppTheme {
       ),
     ),
 
-    // Progress indicator
+    // Progress indicator - Golden tan
     progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: AppColors.deepNavyLight,
-      linearTrackColor: AppColors.deepNavyLight.withOpacity(0.2),
-      circularTrackColor: AppColors.deepNavyLight.withOpacity(0.2),
+      color: AppColors.goldenTan,
+      linearTrackColor: AppColors.goldenTan.withOpacity(0.2),
+      circularTrackColor: AppColors.goldenTan.withOpacity(0.2),
     ),
 
-    // Slider theme
+    // Slider theme - Warm golden
     sliderTheme: SliderThemeData(
-      activeTrackColor: AppColors.deepNavyLight,
-      inactiveTrackColor: AppColors.deepNavyLight.withOpacity(0.25),
-      thumbColor: AppColors.deepNavyLight,
-      overlayColor: AppColors.deepNavyLight.withOpacity(0.1),
+      activeTrackColor: AppColors.goldenTan,
+      inactiveTrackColor: AppColors.goldenTan.withOpacity(0.25),
+      thumbColor: AppColors.goldenTan,
+      overlayColor: AppColors.goldenTan.withOpacity(0.1),
       trackHeight: 4,
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
     ),
@@ -816,12 +818,12 @@ class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
 
-    // Switch theme
+    // Switch theme - Warm golden toggle
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavyLight;
+            return AppColors.goldenTan;
           }
           return AppColors.textTertiaryDark;
         },
@@ -829,35 +831,35 @@ class AppTheme {
       trackColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavyLight.withOpacity(0.4);
+            return AppColors.goldenTan.withOpacity(0.4);
           }
           return AppColors.dividerDark;
         },
       ),
     ),
 
-    // Checkbox theme
+    // Checkbox theme - Golden tan
     checkboxTheme: CheckboxThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavyLight;
+            return AppColors.goldenTan;
           }
           return Colors.transparent;
         },
       ),
-      checkColor: WidgetStateProperty.all(Colors.white),
+      checkColor: WidgetStateProperty.all(AppColors.warmBrownDark),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
     ),
 
-    // Radio theme
+    // Radio theme - Golden tan
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.deepNavyLight;
+            return AppColors.goldenTan;
           }
           return AppColors.textSecondaryDark;
         },
@@ -881,9 +883,9 @@ class AppTheme {
       size: AppColors.iconMedium,
     ),
 
-    // Primary icon theme
+    // Primary icon theme - Golden tan
     primaryIconTheme: IconThemeData(
-      color: AppColors.deepNavyLight,
+      color: AppColors.goldenTan,
       size: AppColors.iconMedium,
     ),
   );
