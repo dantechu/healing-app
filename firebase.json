@@ -1,0 +1,21 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "qigong-workout",
+                    "appId": "1:3829058758:android:fbfe7a2e1b820baa941bc7",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "qigong-workout",
+                    "configurations": {
+                        "android": "1:3829058758:android:fbfe7a2e1b820baa941bc7"
+                    }
+                }
+            }
+        }
+    }
+}

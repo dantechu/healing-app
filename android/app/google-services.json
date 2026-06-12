@@ -23,6 +23,44 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3829058758:android:4b81f755651b8f52941bc7",
+        "android_client_info": {
+          "package_name": "com.amazingelearning.mb005007"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoZIa4ZOFGlxpDdMRg3aGPoCzmXI5Aiac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3829058758:android:fbfe7a2e1b820baa941bc7",
+        "android_client_info": {
+          "package_name": "com.amazingelearning.qigong.healing.power"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoZIa4ZOFGlxpDdMRg3aGPoCzmXI5Aiac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
