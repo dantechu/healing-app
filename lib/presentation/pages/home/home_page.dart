@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +7,7 @@ import '../../../core/utils/localization_helper.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../domain/entities/section.dart';
 import '../../../domain/entities/video.dart';
+import '../lessons/lesson_router.dart';
 import '../../bloc/bookmark/bookmark_bloc.dart';
 import '../../bloc/bookmark/bookmark_state.dart';
 import '../../bloc/video/video_bloc.dart';
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 10),
                     // Course name
                     Text(
-                      courseName.isNotEmpty ? courseName : (AppLocalizations.of(context)?.readyForTaiChi ?? 'Ready for Tai Chi?'),
+                      courseName.isNotEmpty ? courseName : 'Excel Training',
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 22,
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(width: 12),
               Icon(
-                Icons.self_improvement_rounded,
+                Icons.grid_on_rounded,
                 color: theme.colorScheme.primary.withValues(alpha: 0.5),
                 size: 32,
               ),
@@ -481,7 +481,7 @@ class _HomePageState extends State<HomePage> {
                                   return VideoCard(
                                     video: video,
                                     isPremiumUser: isPremium,
-                                    onTap: () => _navigateToVideoPlayer(video, sections: sections),
+                                    onTap: () => _navigateToLesson(video, sections: sections),
                                     sections: sections,
                                   );
                                 },
@@ -546,62 +546,37 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section header with glassmorphism container
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      theme.colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.1),
-                      theme.colorScheme.primary.withValues(alpha: isDark ? 0.08 : 0.05),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.15),
-                    width: 1,
+          // Section header - clean, flat design
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.bookmark_rounded,
+                  size: 16,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Continue Watching',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.bookmark_rounded,
-                        size: 16,
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-'Continue Watching',
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: theme.colorScheme.primary,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
           // Horizontal scrolling bookmark cards
           SizedBox(
-            height: 150,
+            height: 160,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
@@ -615,7 +590,7 @@ class _HomePageState extends State<HomePage> {
                   child: BookmarkCard(
                     video: video,
                     isPremiumUser: isPremium,
-                    onTap: () => _navigateToVideoPlayer(video, sections: sections),
+                    onTap: () => _navigateToLesson(video, sections: sections),
                   ),
                 );
               },
@@ -626,7 +601,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _navigateToVideoPlayer(Video video, {List<Section>? sections}) {
+  void _navigateToLesson(Video lesson, {List<Section>? sections}) {
     // Get the currently selected course
     final coursesState = context.read<CoursesBloc>().state;
     String? selectedCourseId;
@@ -643,30 +618,40 @@ class _HomePageState extends State<HomePage> {
       courseSections ??= coursesState.course.sections;
     }
 
-    // Check if the video belongs to a different course
-    if (video.courseId != null &&
+    // Check if the lesson belongs to a different course
+    if (lesson.courseId != null &&
         selectedCourseId != null &&
-        video.courseId != selectedCourseId) {
-      // Video is from a different course - navigate to course details page
-      _navigateToCourseDetails(video.courseId!);
+        lesson.courseId != selectedCourseId) {
+      // Lesson is from a different course - navigate to course details page
+      _navigateToCourseDetails(lesson.courseId!);
       return;
     }
 
-    // Check if video is premium and user doesn't have premium access
+    // Check if lesson is premium and user doesn't have premium access
     // Use singleton service - SINGLE SOURCE OF TRUTH
     final hasPremiumAccess = PremiumService().isPremium;
 
-    if (video.isPremium && !hasPremiumAccess) {
+    if (lesson.isPremium && !hasPremiumAccess) {
       // Navigate to premium unlock screen
       Navigator.of(context).pushNamed('/premium');
     } else {
-      // Navigate to video player
-      Navigator.of(context).pushNamed(
-        '/video-player',
-        arguments: {
-          'video': video,
-          'sections': courseSections,
-        },
+      // Check if lesson can be played
+      if (!LessonRouter.canPlayLesson(lesson)) {
+        final reason = LessonRouter.getCannotPlayReason(lesson);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(reason ?? 'Cannot play this lesson'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return;
+      }
+
+      // Navigate to appropriate lesson page based on type
+      LessonRouter.navigateToLesson(
+        context,
+        lesson,
+        sections: courseSections,
       );
     }
   }
