@@ -8,9 +8,12 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'core/theme/app_theme.dart';
 import 'core/services/interstitial_ad_service.dart';
+import 'core/services/rewarded_ad_service.dart';
+import 'core/services/ad_unlock_service.dart';
 import 'injection_container.dart' as di;
 import 'presentation/bloc/locale/locale_bloc.dart';
 import 'presentation/bloc/locale/locale_event.dart';
+
 import 'presentation/bloc/locale/locale_state.dart';
 import 'presentation/bloc/theme/theme_bloc.dart';
 import 'presentation/bloc/theme/theme_event.dart';
@@ -27,9 +30,9 @@ import 'presentation/pages/splash/splash_page.dart';
 import 'presentation/pages/onboarding/onboarding_page.dart';
 import 'presentation/pages/navigation/main_navigation_page.dart';
 import 'presentation/pages/premium/premium_page.dart';
-import 'presentation/pages/lessons/lesson_router.dart';
 import 'presentation/pages/premium/premium_unlocked_page.dart';
 import 'presentation/courses/pages/courses_page.dart';
+import 'presentation/pages/lessons/lesson_router.dart';
 import 'domain/entities/section.dart';
 import 'domain/entities/video.dart';
 import 'l10n/app_localizations.dart';
@@ -52,6 +55,12 @@ void main() async {
   // Initialize Interstitial Ad Service (preloads first ad)
   InterstitialAdService().initialize();
 
+  // Initialize Rewarded Ad Service (preloads first ad)
+  RewardedAdService().initialize();
+
+  // Initialize Ad Unlock Service (loads unlocked lessons from storage)
+  await AdUnlockService().initialize();
+
   // Initialize dependency injection
   await di.init();
 
@@ -61,17 +70,17 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const QiGongHealingWorkoutApp());
+  runApp(const HealingMeditationApp());
 }
 
-class QiGongHealingWorkoutApp extends StatefulWidget {
-  const QiGongHealingWorkoutApp({super.key});
+class HealingMeditationApp extends StatefulWidget {
+  const HealingMeditationApp({super.key});
 
   @override
-  State<QiGongHealingWorkoutApp> createState() => _QiGongHealingWorkoutAppState();
+  State<HealingMeditationApp> createState() => _HealingMeditationAppState();
 }
 
-class _QiGongHealingWorkoutAppState extends State<QiGongHealingWorkoutApp> with WidgetsBindingObserver {
+class _HealingMeditationAppState extends State<HealingMeditationApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -130,7 +139,7 @@ class _QiGongHealingWorkoutAppState extends State<QiGongHealingWorkoutApp> with 
           return BlocBuilder<LocaleBloc, LocaleState>(
             builder: (context, localeState) {
               return MaterialApp(
-                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Qi Gong Healing Workout',
+                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Healing Meditation',
                 debugShowCheckedModeBanner: false,
 
                 // Theme configuration
