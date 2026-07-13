@@ -13,7 +13,7 @@ import 'package:healing_app/main.dart';
 void main() {
   testWidgets('Qi Gong app smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const TaiChiWorkoutApp());
+    await tester.pumpWidget(const HealingMeditationApp());
 
     // Verify that our splash screen appears.
     expect(find.text('Qi Gong Healing Workout'), findsOneWidget);
