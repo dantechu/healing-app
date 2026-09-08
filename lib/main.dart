@@ -207,7 +207,7 @@ class _HealingMeditationAppState extends State<HealingMeditationApp> with Widget
           return BlocBuilder<LocaleBloc, LocaleState>(
             builder: (context, localeState) {
               return MaterialApp(
-                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Excel Training',
+                onGenerateTitle: (context) => AppLocalizations.of(context)?.appName ?? 'Healing Workout',
                 debugShowCheckedModeBanner: false,
 
                 // Theme configuration

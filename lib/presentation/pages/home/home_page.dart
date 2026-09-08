@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 12),
                     // Course name
                     Text(
-                      courseName.isNotEmpty ? courseName : 'Excel Training',
+                      courseName.isNotEmpty ? courseName : 'Loading...',
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
