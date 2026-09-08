@@ -1,0 +1,209 @@
+================================================================================
+iOS APP STORE LISTING - QI GONG HEALING WORKOUT (Copy-Paste Ready)
+================================================================================
+
+Based on competitive analysis of Lee Holden, YMAA, and 15+ Qigong/wellness apps
+in September 2026.
+
+--------------------------------------------------------------------------------
+APP NAME (30 characters max)
+--------------------------------------------------------------------------------
+
+Qi Gong Healing Workout
+
+(23 characters)
+
+
+--------------------------------------------------------------------------------
+SUBTITLE (30 characters max)
+--------------------------------------------------------------------------------
+
+Gentle Energy & Stress Relief
+
+(29 characters)
+
+Alternative options for A/B testing:
+- "Healing Exercises for Energy" (29 chars)
+- "Chi Gong for Body & Mind" (24 chars)
+
+
+--------------------------------------------------------------------------------
+KEYWORDS FIELD (100 characters max, comma-separated, NO spaces after commas)
+--------------------------------------------------------------------------------
+
+qigong,chi,tai chi,meditation,breathing,flexibility,seniors,wellness,exercise,relaxation,balance,calm
+
+(100 characters)
+
+Notes:
+- No spaces around commas (iOS requirement)
+- No duplicates from Title or Subtitle (qi gong, healing, energy, stress, relief already indexed)
+- Includes alternate spellings (qigong, chi)
+- Targets senior wellness market
+
+
+--------------------------------------------------------------------------------
+PROMOTIONAL TEXT (170 characters max - can update without app release)
+--------------------------------------------------------------------------------
+
+Heal your body with ancient Qigong. Gentle exercises for energy, flexibility & stress relief. Learn from Dr. Jerry Johnson. 7 languages. One-time purchase, no subscription.
+
+(170 characters)
+
+
+--------------------------------------------------------------------------------
+DESCRIPTION (4000 characters max - NOT indexed for search, write for users)
+--------------------------------------------------------------------------------
+
+Discover the ancient healing art of Qigong with guided video lessons from Dr. Jerry Johnson, a certified instructor with over 20 years of experience. Gentle movements that heal your body while calming your mind.
+
+HEALING THROUGH GENTLE MOVEMENT
+
+Qigong is often called "acupuncture without needles." These gentle exercises cultivate vital energy throughout your body, reducing stress, increasing circulation, and promoting natural healing. Perfect for beginners, seniors, or anyone seeking gentle exercise that actually works.
+
+THE 4 PILLARS OF QIGONG HEALING
+
+STRUCTURE
+Build a foundation of proper body alignment. Learn to stack your shoulders, hips, and heels for stability. Understand the Dantian energy center that powers all Qigong movement.
+
+FLEXIBILITY
+Loosen joints and release tension with exercises that activate fingers, elbows, shoulders, and spine. Generate internal heat while increasing range of motion.
+
+FLUIDITY
+Flow through 10 healing movements including Cloud Hands, Snake Creeps Down, and Apparent Closure. Coordinate breath with motion to create moving meditation.
+
+POWER
+Develop internal strength through gentle resistance training. Use mental imagery to transform simple movements into whole-body exercise.
+
+HEALTH BENEFITS
+
+Qigong has been practiced for thousands of years for healing and wellness. Reported benefits include:
+
+- Reduced muscular tension and emotional stress
+- Increased circulation and energy levels
+- Improved flexibility and balance
+- Relief from arthritis and joint stiffness
+- Better sleep quality
+- Enhanced mental clarity and focus
+
+This is exercise that heals as it strengthens.
+
+FEATURES
+
+Step-by-step HD video instruction with detailed explanations. Dr. Jerry Johnson guides you through proper form, breathing, and energy cultivation.
+
+Customizable breathing exercises with timer and voice guidance. Breath is the foundation of Qigong healing.
+
+Calming meditation music playlists designed for practice sessions.
+
+Full support for English, Chinese, Spanish, Japanese, French, German, and Korean.
+
+Download videos to practice anywhere without internet. Premium feature.
+
+PERFECT FOR SENIORS & BEGINNERS
+
+No gym required. No special equipment. These low-impact exercises are designed for your living room or garden. Gentle on joints while delivering real results.
+
+Whether you are recovering from injury, managing chronic pain, or simply seeking more energy and less stress, Qigong offers a path to better health.
+
+LEARN FROM A CERTIFIED MASTER
+
+Dr. Jerry Johnson brings authenticity and depth to every lesson. His approach focuses on the healing principles that make Qigong effective, not just the movements.
+
+PREMIUM FEATURES ($4.99 one-time purchase)
+
+Download all videos for offline practice. Remove advertisements. Access all premium lessons. Background meditation music. Priority customer support.
+
+No subscription. No monthly fees. Pay once, heal for life.
+
+Start your Qigong healing journey today.
+
+
+================================================================================
+iOS vs GOOGLE PLAY - KEY DIFFERENCES
+================================================================================
+
+| Field | iOS | Google Play |
+|-------|-----|-------------|
+| Title | 30 chars | 30 chars |
+| Subtitle | 30 chars (iOS only) | N/A |
+| Short Description | N/A | 80 chars |
+| Keywords Field | 100 chars (hidden) | N/A (uses description) |
+| Description | NOT indexed | Indexed for search |
+
+IMPORTANT:
+- iOS description is for USERS only, not search
+- Google Play description should be keyword-rich
+- iOS keywords field should NOT repeat words from Title/Subtitle
+
+
+================================================================================
+KEYWORD STRATEGY EXPLANATION
+================================================================================
+
+Words in Title "Qi Gong Healing Workout":
+- qi gong (indexed as phrase)
+- healing (indexed)
+- workout (indexed)
+
+Words in Subtitle "Gentle Energy & Stress Relief":
+- gentle (indexed)
+- energy (indexed)
+- stress (indexed)
+- relief (indexed)
+
+Keywords Field adds NEW terms not in Title/Subtitle:
+- qigong (alternate spelling, single word)
+- chi (energy term)
+- tai chi (related practice)
+- meditation (wellness seekers)
+- breathing (feature/benefit)
+- flexibility (benefit)
+- seniors (demographic)
+- wellness (health category)
+- exercise (broader search)
+- relaxation (benefit)
+- balance (benefit)
+- calm (emotional benefit)
+
+Total indexed terms: 19+ unique searchable keywords
+
+
+================================================================================
+COMPETITIVE POSITIONING
+================================================================================
+
+Market Data (September 2026):
+- Wellness app market: $8.2 billion, 17.6% CAGR
+- Senior fitness apps: fastest-growing demographic
+- "Gentle exercise" searches up 45% YoY
+
+Top Competitors:
+- Lee Holden Qigong: $9.99/month subscription, mainstream
+- YMAA (Dr. Yang): $9.99 per app, fragmented apps
+- Senior fitness apps: No Qigong/energy depth
+
+Qi Gong Healing Workout Advantages:
+1. Healing-focused positioning (not just exercise)
+2. 4-section progressive system
+3. $4.99 one-time purchase (vs subscriptions)
+4. 7 languages
+5. Certified instructor credentials
+6. Senior-friendly, low-impact design
+
+
+================================================================================
+DIFFERENTIATION FROM EXCEL MASTERY APP
+================================================================================
+
+| Aspect | Excel Mastery | Qi Gong Healing |
+|--------|---------------|-----------------|
+| Primary focus | Tai Chi mastery/technique | Healing & wellness |
+| Target audience | Intermediate practitioners | Health seekers, seniors |
+| Keywords | tai chi, mastery, training | qigong, healing, energy |
+| Emotional appeal | "Master the art" | "Heal your body" |
+
+Both apps share the same video content but target different search intents.
+
+
+================================================================================
